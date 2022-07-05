@@ -1,0 +1,11 @@
+<!--index.wxml-->
+<view class="container">
+<view>{{name}}</view>
+
+</view>
+
+<view >
+
+<text>{{msg}}</text>
+  <button bindtap="showData">点击</button>
+</view>

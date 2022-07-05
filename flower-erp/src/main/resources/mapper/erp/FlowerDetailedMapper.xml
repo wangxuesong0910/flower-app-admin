@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flower.erp.mapper.FlowerDetailedMapper">
+    
+    <resultMap type="FlowerDetailed" id="FlowerDetailedResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="color"    column="color"    />
+        <result property="ascriptionId"    column="ascription_id"    />
+        <result property="varietiesId"    column="varieties_id"    />
+        <result property="creator"    column="creator"    />
+        <result property="createDatetime"    column="create_datetime"    />
+        <result property="modifyDatetime"    column="modify_datetime"    />
+    </resultMap>
+
+    <sql id="selectFlowerDetailedVo">
+        select id, type, color, ascription_id, varieties_id, creator, create_datetime, modify_datetime from flower_detailed
+    </sql>
+
+    <select id="selectFlowerDetailedList" parameterType="FlowerDetailed" resultMap="FlowerDetailedResult">
+        <include refid="selectFlowerDetailedVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="color != null  and color != ''"> and color = #{color}</if>
+            <if test="ascriptionId != null  and ascriptionId != ''"> and ascription_id = #{ascriptionId}</if>
+            <if test="varietiesId != null  and varietiesId != ''"> and varieties_id = #{varietiesId}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="createDatetime != null "> and create_datetime = #{createDatetime}</if>
+            <if test="modifyDatetime != null "> and modify_datetime = #{modifyDatetime}</if>
+        </where>
+    </select>
+    
+    <select id="selectFlowerDetailedById" parameterType="String" resultMap="FlowerDetailedResult">
+        <include refid="selectFlowerDetailedVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFlowerDetailed" parameterType="FlowerDetailed">
+        insert into flower_detailed
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="color != null">color,</if>
+            <if test="ascriptionId != null and ascriptionId != ''">ascription_id,</if>
+            <if test="varietiesId != null and varietiesId != ''">varieties_id,</if>
+            <if test="creator != null and creator != ''">creator,</if>
+            <if test="createDatetime != null">create_datetime,</if>
+            <if test="modifyDatetime != null">modify_datetime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="color != null">#{color},</if>
+            <if test="ascriptionId != null and ascriptionId != ''">#{ascriptionId},</if>
+            <if test="varietiesId != null and varietiesId != ''">#{varietiesId},</if>
+            <if test="creator != null and creator != ''">#{creator},</if>
+            <if test="createDatetime != null">#{createDatetime},</if>
+            <if test="modifyDatetime != null">#{modifyDatetime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFlowerDetailed" parameterType="FlowerDetailed">
+        update flower_detailed
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="color != null">color = #{color},</if>
+            <if test="ascriptionId != null and ascriptionId != ''">ascription_id = #{ascriptionId},</if>
+            <if test="varietiesId != null and varietiesId != ''">varieties_id = #{varietiesId},</if>
+            <if test="creator != null and creator != ''">creator = #{creator},</if>
+            <if test="createDatetime != null">create_datetime = #{createDatetime},</if>
+            <if test="modifyDatetime != null">modify_datetime = #{modifyDatetime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFlowerDetailedById" parameterType="String">
+        delete from flower_detailed where id = #{id}
+    </delete>
+
+    <delete id="deleteFlowerDetailedByIds" parameterType="String">
+        delete from flower_detailed where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectFlowerDetailedBo" parameterType="FlowerDetailed" resultType="com.flower.erp.domain.bo.FlowerDetailedBo">
+        select fd.type,fd.color,fd.creator,fd.modify_datetime,fv.varieties,fa.ascription from flower_detailed as fd
+        LEFT JOIN flower_varieties as fv
+        on fd.varieties_id = fv.id
+        left JOIN flower_ascription as fa
+        on fd.ascription_id = fa.id;
+        <where>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+        </where>
+    </select>
+
+    <select id="selectFlowerDetailedType" parameterType="string" resultType="string">
+        select type from flower_detailed
+        <where>
+            <if test="type != null and type!=''">and type = #{type}</if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flower.erp.mapper.FlowerVarietiesMapper">
+    
+    <resultMap type="FlowerVarieties" id="FlowerVarietiesResult">
+        <result property="id"    column="id"    />
+        <result property="varieties"    column="varieties"    />
+        <result property="creator"    column="creator"    />
+        <result property="ascriptionId"    column="ascription_id"    />
+        <result property="createDatetime"    column="create_datetime"    />
+        <result property="modifyDatetime"    column="modify_datetime"    />
+    </resultMap>
+
+    <sql id="selectFlowerVarietiesVo">
+        select id, varieties, creator, ascription_id, create_datetime, modify_datetime from flower_varieties
+    </sql>
+
+    <select id="selectFlowerVarietiesList" parameterType="FlowerVarieties" resultMap="FlowerVarietiesResult">
+        <include refid="selectFlowerVarietiesVo"/>
+        <where>  
+            <if test="varieties != null  and varieties != ''"> and varieties = #{varieties}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="ascriptionId != null  and ascriptionId != ''"> and ascription_id = #{ascriptionId}</if>
+            <if test="createDatetime != null "> and create_datetime = #{createDatetime}</if>
+            <if test="modifyDatetime != null "> and modify_datetime = #{modifyDatetime}</if>
+        </where>
+    </select>
+    
+    <select id="selectFlowerVarietiesById" parameterType="String" resultMap="FlowerVarietiesResult">
+        <include refid="selectFlowerVarietiesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFlowerVarieties" parameterType="FlowerVarieties">
+        insert into flower_varieties
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="varieties != null and varieties != ''">varieties,</if>
+            <if test="creator != null and creator != ''">creator,</if>
+            <if test="ascriptionId != null and ascriptionId != ''">ascription_id,</if>
+            <if test="createDatetime != null">create_datetime,</if>
+            <if test="modifyDatetime != null">modify_datetime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="varieties != null and varieties != ''">#{varieties},</if>
+            <if test="creator != null and creator != ''">#{creator},</if>
+            <if test="ascriptionId != null and ascriptionId != ''">#{ascriptionId},</if>
+            <if test="createDatetime != null">#{createDatetime},</if>
+            <if test="modifyDatetime != null">#{modifyDatetime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFlowerVarieties" parameterType="FlowerVarieties">
+        update flower_varieties
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="varieties != null and varieties != ''">varieties = #{varieties},</if>
+            <if test="creator != null and creator != ''">creator = #{creator},</if>
+            <if test="ascriptionId != null and ascriptionId != ''">ascription_id = #{ascriptionId},</if>
+            <if test="createDatetime != null">create_datetime = #{createDatetime},</if>
+            <if test="modifyDatetime != null">modify_datetime = #{modifyDatetime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFlowerVarietiesById" parameterType="String">
+        delete from flower_varieties where id = #{id}
+    </delete>
+
+    <delete id="deleteFlowerVarietiesByIds" parameterType="String">
+        delete from flower_varieties where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
