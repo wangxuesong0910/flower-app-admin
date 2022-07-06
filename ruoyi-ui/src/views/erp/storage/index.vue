@@ -17,7 +17,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      
+
       <!-- <el-form-item label="花的进货价" prop="buyingPrice">
         <el-input
           v-model="queryParams.buyingPrice"
@@ -90,14 +90,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item> -->
-      <el-form-item label="售卖方式" prop="modeOfSale">
-        <el-input
-          v-model="queryParams.modeOfSale"
-          placeholder="请选择售卖方式：0:拆分|1:整卖(如果sales_quantity为空就为整卖，不为空就是拆分卖)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -177,7 +170,7 @@
       <el-table-column label="批发方式" align="center" prop="packaging" />
       <el-table-column label="数量" align="center" prop="quantity" />
       <!-- <el-table-column label="包含数量" align="center" prop="quantityIncluded" /> -->
-      <el-table-column label="拆分售卖" align="center" prop="salesQuantity" />
+<!--      <el-table-column label="拆分售卖" align="center" prop="salesQuantity" />-->
       <!-- <el-table-column label="售卖方式" align="center" prop="modeOfSale" /> -->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -198,7 +191,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -250,12 +243,12 @@
         <el-form-item label="包含数量" prop="quantityIncluded">
           <el-input v-model="form.quantityIncluded" placeholder="请输入包含数量：例如一扎有多少支" />
         </el-form-item>
-        <el-form-item label="拆分售卖数" prop="salesQuantity">
-          <el-input v-model="form.salesQuantity" placeholder="请输入如果一扎花拆分开卖，已经售卖了多少" />
-        </el-form-item>
-        <el-form-item label="售卖方式" prop="modeOfSale">
-          <el-input v-model="form.modeOfSale" placeholder="请输入售卖方式：0:拆分|1:整卖(如果sales_quantity为空就为整卖，不为空就是拆分卖)" />
-        </el-form-item>
+<!--        <el-form-item label="拆分售卖数" prop="salesQuantity">-->
+<!--          <el-input v-model="form.salesQuantity" placeholder="请输入如果一扎花拆分开卖，已经售卖了多少" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="售卖方式" prop="modeOfSale">-->
+<!--          <el-input v-model="form.modeOfSale" placeholder="请输入售卖方式：0:拆分|1:整卖(如果sales_quantity为空就为整卖，不为空就是拆分卖)" />-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -308,8 +301,7 @@ export default {
         packaging: null,
         quantity: null,
         quantityIncluded: null,
-        salesQuantity: null,
-        modeOfSale: null
+
       },
       // 表单参数
       form: {},
@@ -358,8 +350,7 @@ export default {
         packaging: null,
         quantity: null,
         quantityIncluded: null,
-        salesQuantity: null,
-        modeOfSale: null
+
       };
       this.resetForm("form");
     },

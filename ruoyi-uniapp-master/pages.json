@@ -21,12 +21,12 @@
 				"navigationBarTitleText": "注册账号"
 			}
 		},
-		{
-			"path": "pages/sys/msg/index",
-			"style": {
-				"navigationBarTitleText": "消息"
-			}
-		},
+		// {
+		// 	"path": "pages/sys/msg/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "消息"
+		// 	}
+		// },
 		{
 			"path": "pages/sys/msg/form",
 			"style": {
@@ -220,30 +220,30 @@
 		"backgroundColor": "#ffffff",
 		"borderStyle": "white",
 		"list": [
-			 {
-				"pagePath": "pages/sys/msg/index",
-				"iconPath": "static/aidex/tabbar/msg_1.png",
-				"selectedIconPath": "static/aidex/tabbar/msg_2.png",
-				"text": "消息"
-			},
-			// {
-			// 	"pagePath": "pages/sys/home/index",
-			// 	"iconPath": "static/aidex/tabbar/home_1.png",
-			// 	"selectedIconPath": "static/aidex/tabbar/home_2.png",
-			// 	"text": "首页"
+			//  {
+			// 	"pagePath": "pages/sys/msg/index",
+			// 	"iconPath": "static/aidex/tabbar/msg_1.png",
+			// 	"selectedIconPath": "static/aidex/tabbar/msg_2.png",
+			// 	"text": "消息"
 			// },
+			{
+				"pagePath": "pages/sys/home/index",
+				"iconPath": "static/aidex/tabbar/home_1.png",
+				"selectedIconPath": "static/aidex/tabbar/home_2.png",
+				"text": "首页"
+			},
 			{
 				"pagePath": "pages/sys/workbench/index",
 				"iconPath": "static/aidex/tabbar/apply_1.png",
 				"selectedIconPath": "static/aidex/tabbar/apply_2.png",
 				"text": "工作台"
 			},
-			{
-				"pagePath": "pages/sys/book/index",
-				"iconPath": "static/aidex/tabbar/book_1.png",
-				"selectedIconPath": "static/aidex/tabbar/book_2.png",
-				"text": "通讯录"
-			},
+			// {
+			// 	"pagePath": "pages/sys/book/index",
+			// 	"iconPath": "static/aidex/tabbar/book_1.png",
+			// 	"selectedIconPath": "static/aidex/tabbar/book_2.png",
+			// 	"text": "通讯录"
+			// },
 			{
 				"pagePath": "pages/sys/user/index",
 				"iconPath": "static/aidex/tabbar/my_1.png",

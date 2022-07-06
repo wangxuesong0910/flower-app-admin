@@ -10,7 +10,7 @@
 
     <name>flower</name>
     <url>http://www.flower.vip</url>
-    <description>若依管理系统</description>
+    <description>鼎盛花卉仓储管理</description>
     
     <properties>
         <flower.version>3.8.1</flower.version>

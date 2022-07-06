@@ -71,13 +71,7 @@ public class FlowerStorage extends BaseEntity
     @Excel(name = "包含数量：例如一扎有多少支")
     private Long quantityIncluded;
 
-    /** 如果一扎花拆分开卖，已经售卖了多少 */
-    @Excel(name = "如果一扎花拆分开卖，已经售卖了多少")
-    private Long salesQuantity;
 
-    /** 售卖方式：0:拆分|1:整卖(如果sales_quantity为空就为整卖，不为空就是拆分卖) */
-    @Excel(name = "售卖方式：0:拆分|1:整卖(如果sales_quantity为空就为整卖，不为空就是拆分卖)")
-    private Integer modeOfSale;
 
     public void setId(String id) 
     {
@@ -196,24 +190,7 @@ public class FlowerStorage extends BaseEntity
     {
         return quantityIncluded;
     }
-    public void setSalesQuantity(Long salesQuantity) 
-    {
-        this.salesQuantity = salesQuantity;
-    }
 
-    public Long getSalesQuantity() 
-    {
-        return salesQuantity;
-    }
-    public void setModeOfSale(Integer modeOfSale) 
-    {
-        this.modeOfSale = modeOfSale;
-    }
-
-    public Integer getModeOfSale() 
-    {
-        return modeOfSale;
-    }
 
     @Override
     public String toString() {
@@ -231,8 +208,6 @@ public class FlowerStorage extends BaseEntity
             .append("packaging", getPackaging())
             .append("quantity", getQuantity())
             .append("quantityIncluded", getQuantityIncluded())
-            .append("salesQuantity", getSalesQuantity())
-            .append("modeOfSale", getModeOfSale())
             .toString();
     }
 }

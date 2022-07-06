@@ -4,7 +4,7 @@
 			<view class="userinfo">
 				<view class="image" @click="navTo('info')">
 					<!-- <image :src="avatarUrl"></image> -->
-					<u-avatar size="100"  src="/static/aidex/images/user01.png"></u-avatar>
+					<u-avatar size="100"  src="/static/aidex/images/user-admin.png"></u-avatar>
 					</view>
 				<view class="info" style="display: flex;justify-content: space-between;">
 					<view>
@@ -15,15 +15,19 @@
 				</view>
 			</view>
 			<u-row class="userinfo-topbox" gutter="16" justify="center">
-				<u-col span="4" text-align="center">
+				<u-col span="3" text-align="center">
+					<view class="number">9,999<em>元</em></view>
+					<view>详情</view>
+				</u-col>
+				<u-col span="3" text-align="center">
 					<view class="number">9,999<em>元</em></view>
 					<view>余额</view>
 				</u-col>
-				<u-col span="4" text-align="center"  @click="navTo('/pages/sys/application/recharge')">
+				<u-col span="3" text-align="center"  @click="navTo('/pages/sys/application/recharge')">
 					<view><u-icon size="28px" color="#ffffff" name="rmb-circle"></u-icon></view>
 					<view>充值</view>
 				</u-col>
-				<u-col span="4" text-align="center" @click="navTo('/pages/sys/application/balance-details')">
+				<u-col span="3" text-align="center" @click="navTo('/pages/sys/application/balance-details')">
 					<view>
 						<view class="iconfont icon-faan" style="font-size: 24px;color:#ffffff;"></view>
 					</view>

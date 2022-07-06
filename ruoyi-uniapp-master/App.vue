@@ -12,7 +12,6 @@ export default {
 		// 设置底部导航栏角标
 		uni.setTabBarBadge({
 		  index: 0,
-		  text: '3'
 		});
 		// uni.removeTabBarBadge({
 		//   index: 0

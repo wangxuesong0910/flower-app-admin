@@ -18,8 +18,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="packaging"    column="packaging"    />
         <result property="quantity"    column="quantity"    />
         <result property="quantityIncluded"    column="quantity_included"    />
-        <result property="salesQuantity"    column="sales_quantity"    />
-        <result property="modeOfSale"    column="mode_of_sale"    />
     </resultMap>
 
     <sql id="selectFlowerStorageVo">
@@ -28,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <select id="selectFlowerStorageList" parameterType="FlowerStorage" resultMap="FlowerStorageResult">
-        select fs.id, fd.type, fs.grade, fs.status, fs.buying_price, fs.export_price, fs.discount_price, fs.storage_status, fs.enter_datetime, fs.takeout_datetime, fs.packaging, fs.quantity, fs.quantity_included, fs.sales_quantity, fs.mode_of_sale from flower_storage as fs
+        select fs.id, fd.type, fs.grade, fs.status, fs.buying_price, fs.export_price, fs.discount_price, fs.storage_status, fs.enter_datetime, fs.takeout_datetime, fs.packaging, fs.quantity, fs.quantity_included from flower_storage as fs
         left join flower_detailed as fd
         on fs.detailed_id = fd.id
         <where>  
@@ -44,8 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="packaging != null  and packaging != ''"> and fs.packaging = #{packaging}</if>
             <if test="quantity != null "> and fs.quantity = #{quantity}</if>
             <if test="quantityIncluded != null "> and fs.quantity_included = #{quantityIncluded}</if>
-            <if test="salesQuantity != null "> and fs.sales_quantity = #{salesQuantity}</if>
-            <if test="modeOfSale != null "> and fs.mode_of_sale = #{modeOfSale}</if>
+
         </where>
     </select>
     
@@ -70,8 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="packaging != null">packaging,</if>
             <if test="quantity != null">quantity,</if>
             <if test="quantityIncluded != null">quantity_included,</if>
-            <if test="salesQuantity != null">sales_quantity,</if>
-            <if test="modeOfSale != null">mode_of_sale,</if>
+
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -87,8 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="packaging != null">#{packaging},</if>
             <if test="quantity != null">#{quantity},</if>
             <if test="quantityIncluded != null">#{quantityIncluded},</if>
-            <if test="salesQuantity != null">#{salesQuantity},</if>
-            <if test="modeOfSale != null">#{modeOfSale},</if>
+
          </trim>
     </insert>
 
@@ -107,8 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="packaging != null">packaging = #{packaging},</if>
             <if test="quantity != null">quantity = #{quantity},</if>
             <if test="quantityIncluded != null">quantity_included = #{quantityIncluded},</if>
-            <if test="salesQuantity != null">sales_quantity = #{salesQuantity},</if>
-            <if test="modeOfSale != null">mode_of_sale = #{modeOfSale},</if>
+
         </trim>
         where id = #{id}
     </update>

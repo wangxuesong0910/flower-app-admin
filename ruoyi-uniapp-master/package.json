@@ -1,7 +1,7 @@
 {
-  "name": "Aidex",
+  "name": "DS",
   "version": "2.3.0",
-  "description": "Aidex 移动端快速开发框架",
+  "description": "DS花卉",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,10 +11,10 @@
     "url": "git+https://gitee.com/aidex/aidex-uniapp.git"
   },
   "keywords": [
-    "Aidex",
+    "DS",
     "快速开发平台"
   ],
-  "author": "aidex",
+  "author": "ds",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/aidex/aidex-uniapp/issues"

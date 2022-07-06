@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap">
-		<view class="logo">若依移动APP</view>
+		<view class="logo">DS鼎盛花卉</view>
 		<div v-if="loginType === 'currentPhone'">
 		<u-tabs :list="list" :is-scroll="false" :current="current" @change="onClickItem"></u-tabs>
 		<view v-if="current === 0">
@@ -35,41 +35,11 @@
 				</view>
 			</view>
 		</view>
-		<view v-if="current === 1">
-			<view class="list">
-				<view class="list-call" >
-					<view class="iconfont icon-shouji" style="font-size: 22px;color:#5473e8;"></view>
-					<u-field
-						v-model="phoneNo"
-						label="+86"
-						placeholder="请填写手机号"
-						style="width: 100%;"
-						:border-bottom="false"
-					>
-					</u-field>
-				</view>
-				<div style="padding:25rpx 0 0;">
-					还没有账号？<navigator class="reg-link" url="reg" open-type="navigate">{{$t('login.reg')}}</navigator>
-				</div>
-				
-			</view>
-			<view class="button"  @click="nextStep()"><text>下一步</text></view>
-			<view class="login-bottom-box">
-				<u-divider> 更多登录方式 </u-divider>
-				<view class="oauth2">
-					<u-icon class="u-icon" size="100" color="#36c956" name="weixin-circle-fill" @click="wxLogin"></u-icon>
-					<u-icon class="u-icon" size="100" color="#23a0f0" name="qq-circle-fill" @click="qqLogin"></u-icon>
-				</view>
-				<view class="copyright">
-					登录即代表您已阅读并同意<u-link href="#">用户协议</u-link> 与 <u-link href="#">隐私政策</u-link>
-				</view>
-			</view>
-			
-		</view>
+		
 		</div>
 		
-		<div v-if="loginType !== 'currentPhone'">
-<view class="currentPhone-box">
+<!-- 		<div v-if="loginType !== 'currentPhone'">
+		<view class="currentPhone-box">
 			<view class="number-text">183****1005</view>
 			<view class="other-text">认证服务由中国移动提供。</view>
 			<u-button type="primary" @click="submit('3')">本机号码一键登录</u-button>
@@ -80,7 +50,7 @@
 				登录即代表您已阅读并同意<u-link href="#">用户协议</u-link> 与 <u-link href="#">隐私政策</u-link>
 			</view>
 		</view>
-		</div>
+		</div> -->
 		
 	</view>
 </template>
@@ -101,7 +71,7 @@ export default {
 			isValidCodeLogin: false,
 			validCode: '',
 			imgValidCodeSrc: null,
-			list: [{name: '用户名'}, {name: '手机号'}],
+			list: [{name: '用户登录'}],
 			current: 0,
 			activeColor: '#007aff',
 		};
@@ -186,7 +156,7 @@ export default {
 				if (res.code == '200') {
 					setTimeout(() => {
 						uni.reLaunch({
-							url: '/pages/sys/msg/index'
+							url: '/pages/sys/home/index'
 						});
 					}, 500);
 				}
