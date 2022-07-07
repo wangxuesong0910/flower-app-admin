@@ -1,9 +1,9 @@
 {
-    "name" : "aidexapp",
-    "appid" : "__UNI__3570A56",
-    "description" : "aidex敏捷开发平台",
-    "versionName" : "1.8.4",
-    "versionCode" : "100",
+    "name" : "ds",
+    "appid" : "__UNI__0D280F7",
+    "description" : "ds平台",
+    "versionName" : "1.0.0",
+    "versionCode" : 1,
     "transformPx" : false,
     "app-plus" : {
         // APP-VUE分包，可提APP升启动速度，2.7.12开始支持，兼容微信小程序分包方案，默认关闭
@@ -104,9 +104,9 @@
             "splashscreen" : {
                 "androidStyle" : "default",
                 "android" : {
-                    "hdpi" : "E:/vueworkspace/aidex-m2m/src/assets/logo.png",
-                    "xhdpi" : "E:/vueworkspace/aidex-m2m/src/assets/logo.png",
-                    "xxhdpi" : "E:/vueworkspace/aidex-m2m/src/assets/logo.png"
+                    "hdpi" : "",
+                    "xhdpi" : "",
+                    "xxhdpi" : ""
                 }
             }
         }

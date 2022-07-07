@@ -2,18 +2,92 @@
 	<view class="wrap">
 		<head-nav-bar title="首页" />
 		<u-swiper :height="270" :list="imgList" :title="false" @click="imgListClick"></u-swiper>
-		<u-collapse-item style="display: none;">
-		</u-collapse-item>
 		<view class="dashboard-editor-container">
 			<u-row gutter="16">
 				<u-col span="3">
-					
+					<uni-view class="u-demo-wrap">
+						<u-row gutter="1">
+							<u-col span="6">
+								<!-- <uni-view class="u-demo-title">演示效果</uni-view> -->
+								<uni-view id="u-tab-item-1" class="u-tab-item u-line-1"
+									style=" transition-duration: 0.5s; margin-left: -10px;">
+									<iconFont name="peoples" color="#40c9c6"></iconFont>
+								</uni-view>
+							</u-col>
+							<u-col span="6">
+								<uni-view id="u-tab-item-2" class="u-tab-item u-line-1"
+									style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 5rpx; color: rgba(0, 0, 0, 0.45);">
+									<!---->用户
+								</uni-view>
+								<uni-view class="u-tab-item u-line-1" style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 10rpx;font-weight: bold;">{{todoCount}}</uni-view>
+							</u-col>
+						</u-row>
+					</uni-view>
 				</u-col>
-				<u-col span="4">
-					<view class="demo-layout bg-purple-light"></view>
+				<u-col span="3">
+					<uni-view class="u-demo-wrap">
+						<u-row gutter="1">
+							<u-col span="6">
+								<!-- <uni-view class="u-demo-title">演示效果</uni-view> -->
+								<uni-view id="u-tab-item-1" class="u-tab-item u-line-1"
+									style=" transition-duration: 0.5s; margin-left: -10px;">
+									<iconFont name="message" color="#36a3f7"></iconFont>
+								</uni-view>
+							</u-col>
+							<u-col span="6">
+								<uni-view id="u-tab-item-2" class="u-tab-item u-line-1"
+									style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 5rpx; color: rgba(0, 0, 0, 0.45);">
+									<!---->库存
+								</uni-view>
+								<uni-view class="u-tab-item u-line-1" style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 10rpx;font-weight: bold;">{{todoCount}}</uni-view>
+							</u-col>
+						</u-row>
+
+
+					</uni-view>
 				</u-col>
-				<u-col span="5">
-					<view class="demo-layout bg-purple-dark"></view>
+				<u-col span="3">
+					<uni-view class="u-demo-wrap">
+						<u-row gutter="1">
+							<u-col span="6">
+								<!-- <uni-view class="u-demo-title">演示效果</uni-view> -->
+								<uni-view id="u-tab-item-1" class="u-tab-item u-line-1"
+									style=" transition-duration: 0.5s; margin-left: -10px;">
+									<iconFont name="message" color="#f4516c"></iconFont>
+								</uni-view>
+							</u-col>
+							<u-col span="6">
+								<uni-view id="u-tab-item-2" class="u-tab-item u-line-1"
+									style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 5rpx; color: rgba(0, 0, 0, 0.45);">
+									<!---->损坏
+								</uni-view>
+								<uni-view class="u-tab-item u-line-1" style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 10rpx;font-weight: bold;">{{todoCount}}</uni-view>
+							</u-col>
+						</u-row>
+
+
+					</uni-view>
+				</u-col>
+				<u-col span="3">
+					<uni-view class="u-demo-wrap">
+						<u-row gutter="1">
+							<u-col span="6">
+								<!-- <uni-view class="u-demo-title">演示效果</uni-view> -->
+								<uni-view id="u-tab-item-1" class="u-tab-item u-line-1"
+									style=" transition-duration: 0.5s; margin-left: -10px;">
+									<iconFont name="money" color="#34bfa3"></iconFont>
+								</uni-view>
+							</u-col>
+							<u-col span="6">
+								<uni-view id="u-tab-item-2" class="u-tab-item u-line-1"
+									style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 5rpx; color: rgba(0, 0, 0, 0.45);">
+									<!---->订单
+								</uni-view>
+								<uni-view class="u-tab-item u-line-1" style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 10rpx;font-weight: bold;">{{todoCount}}</uni-view>
+							</u-col>
+						</u-row>
+
+					</uni-view>
 				</u-col>
 			</u-row>
 		</view>
@@ -24,12 +98,14 @@
 </template>
 <script>
 	import HeadNavBar from '@/components/headnavbar/index';
+	import iconFont from '@/components/iconfont/index';
 	/**
 	 * Copyright (c) 2013-Now http://aidex.vip All rights reserved.
 	 */
 	export default {
 		components: {
-			HeadNavBar
+			HeadNavBar,
+			iconFont
 		},
 		data() {
 			return {
@@ -76,14 +152,24 @@
 <style lang="scss">
 	@import 'index.scss';
 
+	.u-demo-wrap {
+		border-width: 1px;
+		border-color: #ddd;
+		border-style: dashed;
+		background-color: #fafafa;
+		padding: 5px 5px;
+		border-radius: 7px;
+		height: 80rpx;
+	}
+
 	.dashboard-editor-container {
-		padding: 32px;
+		padding: 20px;
 		background-color: rgb(240, 242, 245);
 
 		.chart-wrapper {
 			background: #fff;
-			padding: 16px 16px 0;
-			margin-bottom: 32px;
+			padding: 10px 10px 0;
+			margin-bottom: 30px;
 		}
 	}
 

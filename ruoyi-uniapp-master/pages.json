@@ -177,6 +177,12 @@
 			}
 		},
 		{
+			"path": "pages/sys/workbench/user/index",
+			"style": {
+				"navigationBarTitleText": "用户管理"
+			}
+		},
+		{
 			"path": "pages/sys/msg/examine-item",
 			"style": {
 				"navigationBarTitleText": "网上报销"

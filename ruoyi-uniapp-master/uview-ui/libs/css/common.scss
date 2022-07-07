@@ -291,6 +291,26 @@ text {
 	 background:#f5f6f7;
 	 border:1rpx dashed #e1e1e3;
 }
+//用户icon底色
+.icon-color14{
+	background-image: linear-gradient(0deg, #40c9c6, #40c9c6);
+	border:1rpx solid #40c9c6;
+}
+//库存管理icon底色
+.icon-color15{
+	background-image: linear-gradient(0deg, #36a3f7, #36a3f7);
+	border:1rpx solid #36a3f7;
+}
+//损坏数量icon底色
+.icon-color16{
+	background-image: linear-gradient(0deg, #f4516c, #f4516c);
+	border:1rpx solid #f4516c;
+}
+//订单icon底色
+.icon-color17{
+	background-image: linear-gradient(0deg, #34bfa3, #34bfa3);
+	border:1rpx solid #34bfa3;
+}
 .home-icon{
 	position: relative;
 	.u-badge{

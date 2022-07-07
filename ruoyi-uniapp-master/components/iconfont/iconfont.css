@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3505803 */
+  src: url('iconfont.woff2?t=1657159960716') format('woff2'),
+       url('iconfont.woff?t=1657159960716') format('woff'),
+       url('iconfont.ttf?t=1657159960716') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.gouwucheman:before {
+  content: "\e600";
+}
+
+.money:before {
+  content: "\e607";
+}
+
+.message:before {
+  content: "\e635";
+}
+
+.peoples:before {
+  content: "\e61b";
+}
+
+.xianhua-evaluate_fill:before {
+  content: "\e649";
+}
+

@@ -2,7 +2,7 @@
 	<view class="wrap">
 		<view class="logo">DS鼎盛花卉</view>
 		<div v-if="loginType === 'currentPhone'">
-		<u-tabs :list="list" :is-scroll="false" :current="current" @change="onClickItem"></u-tabs>
+		<u-tabs :list="list" :is-scroll="false"></u-tabs>
 		<view v-if="current === 0">
 			<view class="list">
 				<view class="list-call">
