@@ -25,6 +25,6 @@ const config = {
 
 // 设置后台接口服务的基础地址
 // config.baseUrl = 'https://aidex.vip/api';
-config.baseUrl = 'http://localhost:8080';
+config.baseUrl = 'http://192.168.1.100:8080';
 
 export default config;

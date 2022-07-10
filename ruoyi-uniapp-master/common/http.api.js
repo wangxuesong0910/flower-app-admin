@@ -51,6 +51,14 @@ const install = (Vue, vm) => {
 		empUser: {
 			listData: (params = {}) => vm.$u.get(config.adminPath+'/sys/empUser/listData', params),
 		},
+		// 仓储查询
+		storageListData: {
+			listData: (params = {}) => vm.$u.get(config.adminPath+'/erp/storage/list', params),
+		},
+		// 品种管理
+		repository: {
+			titleListData: () => vm.$u.get(config.adminPath+'/erp/varieties/list'),
+		},
 		
 		// 组织机构查询
 		office: {

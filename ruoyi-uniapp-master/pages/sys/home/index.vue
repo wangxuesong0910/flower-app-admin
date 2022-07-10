@@ -159,7 +159,7 @@
 		background-color: #fafafa;
 		padding: 5px 5px;
 		border-radius: 7px;
-		height: 80rpx;
+		height: 80px;
 	}
 
 	.dashboard-editor-container {

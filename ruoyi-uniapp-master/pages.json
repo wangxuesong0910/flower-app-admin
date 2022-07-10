@@ -183,6 +183,30 @@
 			}
 		},
 		{
+			"path": "pages/sys/workbench/put/index",
+			"style": {
+				"navigationBarTitleText": "入库"
+			}
+		},
+		{
+			"path": "pages/sys/workbench/out/index",
+			"style": {
+				"navigationBarTitleText": "出库"
+			}
+		},
+		{
+			"path": "pages/sys/workbench/detail/index",
+			"style": {
+				"navigationBarTitleText": "品种管理"
+			}
+		},
+		{
+			"path": "pages/sys/workbench/repository/index",
+			"style": {
+				"navigationBarTitleText": "库存管理"
+			}
+		},
+		{
 			"path": "pages/sys/msg/examine-item",
 			"style": {
 				"navigationBarTitleText": "网上报销"

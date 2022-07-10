@@ -4,42 +4,54 @@
 		<view class="workbench-title">常用应用</view>
 		<view class="toolbar">
 			<u-grid class="grid" :col="4" :border="false">
-				<u-grid-item :index="0" @click="navTo('/pages/sys/workbench/add-form')" >
+<!-- 				<u-grid-item :index="0" @click="navTo('/pages/sys/workbench/add-form')" >
 					<view class="home-icon icon-color01">
 						<i class="iconfont icon-qingjia"></i>
 					</view>
 					<view class="grid-text">请假申请</view>
-				</u-grid-item>
+				</u-grid-item> -->
 				<u-grid-item :index="1" @click="navTo('/pages/sys/workbench/user/index')">
 					<view class="home-icon icon-color14">
 						<i class="iconfont icon-peoples"></i>
 					</view>
 					<view class="grid-text">用户管理</view>
 				</u-grid-item>
-				<u-grid-item :index="2" @click="navTo('')">
+				<u-grid-item :index="2" @click="navTo('/pages/sys/workbench/put/index')">
 					<view class="home-icon icon-color15">
-						<i class="iconfont icon-message"></i>
+						<i class="iconfont icon-ruku"></i>
+					</view>
+					<view class="grid-text">入库</view>
+				</u-grid-item>
+				<u-grid-item :index="2" @click="navTo('/pages/sys/workbench/out/index')">
+					<view class="home-icon icon-color16">
+						<i class="iconfont icon-chuku"></i>
+					</view>
+					<view class="grid-text">出库</view>
+				</u-grid-item>
+				<u-grid-item  @click="navTo('/pages/sys/workbench/repository/index')">
+					<view class="home-icon icon-color12">
+						<i class="iconfont icon-donework"></i>
 					</view>
 					<view class="grid-text">库存管理</view>
 				</u-grid-item>
-				<u-grid-item :index="2" @click="navTo('')">
-					<view class="home-icon icon-color16">
-						<i class="iconfont icon-message"></i>
+				<u-grid-item  @click="navTo('/pages/sys/workbench/detail/index')">
+					<view class="home-icon icon-color14">
+						<i class="iconfont icon-hua"></i>
 					</view>
-					<view class="grid-text">损坏管理</view>
+					<view class="grid-text">品种管理</view>
 				</u-grid-item>
-				<u-grid-item  @click="navTo('')">
+<!-- 				<u-grid-item  @click="navTo('')">
 					<view class="home-icon icon-color17">
 						<i class="iconfont icon-money"></i>
 					</view>
 					<view class="grid-text">订单</view>
-				</u-grid-item>
-				<u-grid-item  @click="navTo('')">
+				</u-grid-item> -->
+<!-- 				<u-grid-item  @click="navTo('')">
 					<view class="home-icon icon-color05">
 						<i class="iconfont icon-huiyishi"></i>
 					</view>
 					<view class="grid-text">会议室</view>
-				</u-grid-item>
+				</u-grid-item> -->
 				<!-- <u-grid-item  @click="navTo('/pages/sys/workbench/install')">
 					<view class="home-icon icon-color13">
 						<i class="iconfont icon-tianjia" style="color:#90949d;"></i>
