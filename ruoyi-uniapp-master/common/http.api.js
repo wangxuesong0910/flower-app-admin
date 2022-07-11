@@ -58,6 +58,7 @@ const install = (Vue, vm) => {
 		// 品种管理
 		repository: {
 			titleListData: () => vm.$u.get(config.adminPath+'/erp/varieties/list'),
+			contentListData: (params = {}) => vm.$u.get(config.adminPath+'/erp/detailed/list',params),
 		},
 		
 		// 组织机构查询
