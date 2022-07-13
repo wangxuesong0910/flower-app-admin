@@ -1,6 +1,8 @@
 package com.flower.erp.controller;
 
 import com.flower.common.core.controller.BaseController;
+import com.flower.common.core.domain.AjaxResult;
+import com.flower.common.core.domain.model.TencentBucket;
 import com.flower.common.core.page.TableDataInfo;
 import com.flower.erp.domain.FlowerAscription;
 import com.flower.erp.domain.bo.FlowerDetailedBo;
@@ -21,6 +23,9 @@ public class FlowerCoreController extends BaseController {
     @Autowired
     private IFlowerCoreService service;
 
+    @Autowired
+    private TencentBucket tencentBucket;
+
     /**
      * 查询二级分类列表
      */
@@ -31,4 +36,12 @@ public class FlowerCoreController extends BaseController {
         List<FlowerDetailedBo> flowerDetailedBoList = service.getFlowerDetailedBoList();
         return getDataTable(flowerDetailedBoList);
     }
+
+    @GetMapping("/bucket")
+    public AjaxResult bucket()
+    {
+//        TencentBucket titleListencentBucket = new TencentBucket();
+        return AjaxResult.success(tencentBucket);
+    }
+
 }

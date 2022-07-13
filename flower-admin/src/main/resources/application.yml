@@ -38,6 +38,7 @@ logging:
   level:
     com.ruoyi: debug
     org.springframework: warn
+    com.flower.erp.mapper: debug
 
 # Spring配置
 spring:
@@ -99,6 +100,8 @@ mybatis:
     mapperLocations: classpath*:mapper/**/*Mapper.xml
     # 加载全局的配置文件
     configLocation: classpath:mybatis/mybatis-config.xml
+    #configuration:
+      #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 # PageHelper分页插件
 pagehelper: 
@@ -121,3 +124,32 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+  # 对象存储配置
+
+storage:
+    # 当前工作的对象存储模式，分别是local、aliyun、tencent、qiniu
+  active: tencent
+    # 本地对象存储配置信息
+  local:
+    storagePath: storage
+      # 这个地方应该是wx模块的WxStorageController的fetch方法对应的地址
+    address: http://localhost:8080/wx/storage/fetch/
+    # 阿里云对象存储配置信息
+  aliyun:
+    endpoint: oss-cn-shenzhen.aliyuncs.com
+    accessKeyId: 111111
+    accessKeySecret: xxxxxx
+    bucketName: litemall
+    # 腾讯对象存储配置信息
+    # 请参考 https://cloud.tencent.com/document/product/436/6249
+  tencent:
+    secretId: AKIDJTUEk1PlDRQChmTBTVIpGbSCOQJvA8fS
+    secretKey: h9VcDZWHH2WjArJ1TeaIXWjhQu7IE9nB
+    region: ap-nanjing
+    bucketName: 13033950399-1257633837
+    # 七牛云对象存储配置信息
+  qiniu:
+    endpoint: http://pd5cb6ulu.bkt.clouddn.com
+    accessKey: 111111
+    secretKey: xxxxxx
+    bucketName: litemall

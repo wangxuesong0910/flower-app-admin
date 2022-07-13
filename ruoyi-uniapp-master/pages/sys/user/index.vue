@@ -23,10 +23,10 @@
 					<view class="number">9,999<em>元</em></view>
 					<view>余额</view>
 				</u-col>
-				<u-col span="3" text-align="center"  @click="navTo('/pages/sys/application/recharge')">
+<!-- 				<u-col span="3" text-align="center"  @click="navTo('/pages/sys/application/recharge')">
 					<view><u-icon size="28px" color="#ffffff" name="rmb-circle"></u-icon></view>
 					<view>充值</view>
-				</u-col>
+				</u-col> -->
 				<u-col span="3" text-align="center" @click="navTo('/pages/sys/application/balance-details')">
 					<view>
 						<view class="iconfont icon-faan" style="font-size: 24px;color:#ffffff;"></view>

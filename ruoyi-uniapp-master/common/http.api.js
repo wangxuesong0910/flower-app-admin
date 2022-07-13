@@ -57,8 +57,12 @@ const install = (Vue, vm) => {
 		},
 		// 品种管理
 		repository: {
+			// 品种列表card的表头
 			titleListData: () => vm.$u.get(config.adminPath+'/erp/varieties/list'),
-			contentListData: (params = {}) => vm.$u.get(config.adminPath+'/erp/detailed/list',params),
+			// 品种列表card的内容
+			contentListData: (params) => vm.$u.get(config.adminPath+'/erp/detailed/list',params),
+			//二级分类添加的一级分类下拉框内容
+			ascriptionList: () => vm.$u.get(config.adminPath+'/erp/ascription/list'),
 		},
 		
 		// 组织机构查询

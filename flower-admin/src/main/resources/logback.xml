@@ -4,11 +4,23 @@
 	<property name="log.path" value="/home/flower/logs" />
     <!-- 日志输出格式 -->
 	<property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
+    <!-- 彩色日志 -->
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
 
-	<!-- 控制台输出 -->
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+
+
+    <!-- 控制台输出 -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+        </filter>
 		<encoder>
-			<pattern>${log.pattern}</pattern>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
 		</encoder>
 	</appender>
 	
@@ -27,7 +39,7 @@
 		</encoder>
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
             <!-- 过滤的级别 -->
-            <level>INFO</level>
+            <level>info</level>
             <!-- 匹配时的操作：接收（记录） -->
             <onMatch>ACCEPT</onMatch>
             <!-- 不匹配时的操作：拒绝（不记录） -->
@@ -76,7 +88,7 @@
 	<!-- Spring日志级别控制  -->
 	<logger name="org.springframework" level="warn" />
 
-	<root level="info">
+	<root level="debug">
 		<appender-ref ref="console" />
 	</root>
 	
@@ -90,4 +102,14 @@
     <logger name="sys-user" level="info">
         <appender-ref ref="sys-user"/>
     </logger>
+
+<!--    <logger name="org.jxls" level="warn"/>-->
+    <logger name="org.springframework" level="warn"/>
+    <logger name="org.mybatis" level="warn"/>
+<!--    <logger name="org.apache" level="warn"/>-->
+<!--    <logger name="com.zaxxer.hikari" level="warn"/>-->
+<!--    <logger name="org.hibernate.validator" level="warn"/>-->
+<!--    <logger name="com.baomidou" level="warn"/>-->
+    <!--    <logger name="com.highjet" level="info"/>-->
+
 </configuration> 

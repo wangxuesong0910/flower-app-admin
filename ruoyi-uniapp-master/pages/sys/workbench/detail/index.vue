@@ -4,58 +4,67 @@
 		<!-- 当前套餐 -->
 
 		<view v-if="current === 0">
+			<!-- 添加一级分类 -->
+			<u-modal v-model="leftShow" width="80%" title="科属添加" confirm-text="添加"  :show-cancel-button="modalClose">
+				<u-form :model="leftForm" ref="leftForm">
+						<u-form-item label="一级分类:" label-width="130" >
+							<u-input placeholder="请输入科属" width="200" type="input"/>
+						</u-form-item>
+				</u-form>
+			</u-modal>
+			<!-- 添加二级分类 -->
+			<u-modal v-model="rightShow" width="80%" title="分类添加"  confirm-text="添加" :show-cancel-button="modalClose">
+				<u-form :model="rightForm" ref="rightForm">
+						<u-form-item label="一级分类:" label-width="130" >
+							<u-input v-model="value" type="select" @click="rightFormSelectOpen1" />
+									<u-action-sheet :list="rightFormSelectList" v-model="rightFormShow1" @click="rightFormSelectCallback1"></u-action-sheet>
+							<!-- <u-input placeholder="请选择一级分类" v-model="list.name" type="select" class="form-field-select" /> -->
+						</u-form-item>
+						<u-form-item label="二级分类:" label-width="130" >
+							<u-input placeholder="请输入二级分类" width="200" type="input"/>
+						</u-form-item>
+				</u-form>
+			</u-modal>
+			<u-gap height="20" bg-color="#f5f5f5"></u-gap>
+			<u-row gutter="32" justify="center">
+				<u-col span="6">
+					<u-button @click="leftOpen"  type="primary" shape="square" size="medium" :ripple="true" ripple-bg-color="#909399">
+						添加一级分类
+					</u-button>
+				</u-col>
+				<u-col span="6">
+					<u-button @click="rightOpen"  type="success" shape="square" size="medium" :ripple="true" ripple-bg-color="#909399">
+						添加二级分类
+					</u-button>
+				</u-col>
+			</u-row>
 			<u-form :model="form" class="apply-form-field">
 				<u-gap height="20" bg-color="#f5f5f5"></u-gap>
-				<u-form-item label="品种分类" label-width="150">
-					<u-input placeholder="请选择" type="input" />
+				<u-form-item label="一级分类" label-width="150" right-icon="arrow-right">
+					<u-input placeholder="请选择" type="select" class="form-field-select" />
 				</u-form-item>
-				<u-gap height="20" bg-color="#f5f5f5"></u-gap>
+				
+				<u-form-item label="二级分类" label-width="150" right-icon="arrow-right">
+					<u-input placeholder="请选择" type="select" class="form-field-select" />
+				</u-form-item>
+				<!-- <u-gap height="20" bg-color="#f5f5f5"></u-gap>
 				<u-form-item label="开始时间" label-width="150" right-icon="arrow-right">
 					<u-input placeholder="请选择" type="select" class="form-field-select" />
 				</u-form-item>
 				<u-form-item label="结束时间" label-width="150" right-icon="arrow-right">
 					<u-input placeholder="请选择" type="select" class="form-field-select" />
+				</u-form-item> -->
+				<u-form-item label="数量" label-width="150" >
+					<u-input placeholder="请输入" type="input" />
 				</u-form-item>
-				<u-gap height="20" bg-color="#f5f5f5"></u-gap>
-				<u-form-item label="请假事由" label-width="150"></u-form-item>
-				<u-form-item>
-					<u-input type="textarea" placeholder="请输入内容" />
+				<u-form-item label="批发方式" label-width="150" right-icon="arrow-right">
+					<u-input placeholder="请选择" type="select" class="form-field-select" />
 				</u-form-item>
-				<u-gap height="20" bg-color="#f5f5f5"></u-gap>
-				<u-form-item label="图片" label-width="150">
-					<view solt="right" style="flex:1;text-align: right;align-items: center;">
-						<i class="add-user iconfont icon-tupian"></i>
-					</view>
+				<u-form-item label="进货价" label-width="150" >
+					<u-input placeholder="请输入" type="input" />
 				</u-form-item>
-				<u-gap height="20" bg-color="#f5f5f5"></u-gap>
-				<u-form-item label="选人处理人" label-width="150">
-					<view solt="right" style="flex:1;text-align: right;align-items: center;">
-						<i class="add-user iconfont icon-zengjia"></i>
-					</view>
-				</u-form-item>
-				<u-form-item>
-					<view class="personnel-list">
-						<view class="personnel-user">
-							<image class="user-images" src="/static/aidex/images/user01.png"></image>
-							<i class="iconfont icon-close-circle-fill"></i>
-						</view>
-						<view class="personnel-user">
-							<image class="user-images" src="/static/aidex/images/user02.png"></image>
-							<i class="iconfont icon-close-circle-fill"></i>
-						</view>
-						<view class="personnel-user">
-							<image class="user-images" src="/static/aidex/images/user03.png"></image>
-							<i class="iconfont icon-close-circle-fill"></i>
-						</view>
-						<view class="personnel-user">
-							<image class="user-images" src="/static/aidex/images/user04.png"></image>
-							<i class="iconfont icon-close-circle-fill"></i>
-						</view>
-						<view class="personnel-user">
-							<image class="user-images" src="/static/aidex/images/user05.png"></image>
-							<i class="iconfont icon-close-circle-fill"></i>
-						</view>
-					</view>
+				<u-form-item label="档次" label-width="150" right-icon="arrow-right">
+					<u-input placeholder="请选择" type="select" class="form-field-select" />
 				</u-form-item>
 			</u-form>
 			<u-row gutter="32" class="bottom-box" justify="center">
@@ -70,10 +79,14 @@
 			<!-- <view class="search">
 				<u-search v-model="keyWords" @custom="search" @search="search"></u-search>
 			</view>-->
+<!--			种类列表界面-->
 			
 			<u-card :title-color="'#40c9c6'" :sub-title="item.createDatetime" :title="item.varieties" v-for="(item, index) in titleList" :key="index" @head-click="open(item.id)" >
+				
 					<view class="" slot="body">
-						<view class="u-body-item  u-border-bottom u-col-between u-p-t-0" v-for="(item1, index1) in contentList" :key="index1">
+						<u-read-more ref="uReadMore" :toggle="true" open-text="收起" close-text="展开">
+						<view class="u-body-item  u-border-bottom u-col-between u-p-t-0" v-for="(item1, index1) in contentList[item.id]" :key="index1">
+							
 							<u-row gutter="2">
 								<u-col span="4">
 									<view class="u-body-item-title u-line-2">{{item1.type}}</view>
@@ -87,6 +100,7 @@
 								</u-col>
 							</u-row>
 						</view>
+						</u-read-more>
 						
 					</view>
 					<view class="" slot="foot"><u-icon name="chat-fill" size="34" color="" label="30评论"></u-icon></view>
@@ -98,7 +112,10 @@
 	export default {
 		data() {
 			return {
-				show: false,
+				value: '',
+				modalClose: true,
+				leftShow: false,
+				rightShow: false,
 				list: [{
 					name: '添加品种'
 				}, {
@@ -115,20 +132,13 @@
 					loading: '正在加载...',
 					nomore: '没有更多了'
 				},
-				dataList: [{
-					age: 1,
-					name: 'aaa'
-				}, {
-					age: 2,
-					name: 'bbb'
-				}, {
-					age: 3,
-					name: 'ccc'
-				}],
+				
 				keyWords: '',
 				form: {},
 				titleList: [],
-				contentList: [],
+				//二级分类数组
+				varietiesList: [],
+				contentList: {},
 				// 查询参数
 				queryParams: {
 					pageNum: 1,
@@ -141,27 +151,50 @@
 					createDatetime: null,
 					modifyDatetime: null
 				},
-				
+				clickIndex:0,
+				// 一级分类表单参数
+				leftForm: {},
+				// 二级分类表单参数
+				rightForm: {},
+				// 二级分类表单中：一级分类下拉框;下拉列表值
+				rightFormShow1: false,
+				rightFormSelectList: [],
+				// 三级分类表单参数
+				centerForm: {},
 			}
 		},
 
 		onLoad() {
-			this.getList();
+			this.getList()
 		},
 		created() {},
 		methods: {
-			// 查询列表
+			// 查询二级列表
 			getList() {
 				this.$u.api.repository.titleListData({}).then(res => {
 					this.titleList = res.rows;
+					for (let i = 0; i < this.titleList.length; i++) {
+						this.queryParams.varietiesId = this.titleList[i].id;
+						this.getContentList(this.queryParams);
+					}
+					
 				});
 
+
 			},
+			//获取三级列表
 			getContentList(queryParams) {
-				this.$u.api.repository.contentListData({
+				let vid = queryParams.varietiesId;
+				this.$u.api.repository.contentListData(
 					queryParams
-				}).then(res => {
-					this.contentList = res.rows;
+				).then(res => {
+					// this.contentList = res.rows;
+					let conList = [];
+					conList = res.rows;
+					// let listdetail = {'id':queryParams.varietiesId,'conList':conList};
+					this.contentList[vid] = conList;
+					
+					this.$forceUpdate();
 				});
 			},
 
@@ -175,11 +208,33 @@
 				});
 			},
 
-			open(e) {
-				this.contentList=[];
-				this.queryParams.varietiesId = e;
-				this.getContentList(this.queryParams)
+			// open(e) {
+			// 	console.log("----->"+e)
+			// 	this.clickIndex = e;
+			// 	this.queryParams.varietiesId = e;
+			// 	this.getContentList(this.queryParams)
+				
+			// },
+			leftOpen() {
+				this.leftShow = true;
 			},
+			rightOpen() {
+				this.rightShow = true;
+				this.$u.api.repository.ascriptionList({}).then(res => {
+					this.rightFormSelectList = [];
+					this.varietiesList = res.rows; 
+					for (var i = 0; i < res.rows.length; i++) {
+						this.rightFormSelectList.push({text:res.rows[i].ascription})
+					}
+				})
+			},
+			rightFormSelectOpen1() {
+				this.rightFormShow1 = true;
+			},
+			// 点击actionSheet回调
+			rightFormSelectCallback1(index) {
+				this.value = this.rightFormSelectList[index].text;
+			}
 		}
 	}
 </script>
