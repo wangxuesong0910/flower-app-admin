@@ -63,13 +63,13 @@ spring:
   # redis 配置
   redis:
     # 地址
-    host: 127.0.0.1
+    host: 47.104.229.230
     # 端口，默认为6379
     port: 6379
     # 数据库索引
     database: 0
     # 密码
-    password: 123456
+    password: wo1021gstar
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -143,10 +143,10 @@ storage:
     # 腾讯对象存储配置信息
     # 请参考 https://cloud.tencent.com/document/product/436/6249
   tencent:
-    secretId:
-    secretKey:
+    secretId: AKIDJTUEk1PlDRQChmTBTVIpGbSCOQJvA8fS
+    secretKey: h9VcDZWHH2WjArJ1TeaIXWjhQu7IE9nB
     region: ap-nanjing
-    bucketName: 
+    bucketName: 13033950399-1257633837
     # 七牛云对象存储配置信息
   qiniu:
     endpoint: http://pd5cb6ulu.bkt.clouddn.com

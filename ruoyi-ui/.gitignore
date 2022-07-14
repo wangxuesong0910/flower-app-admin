@@ -10,6 +10,10 @@ tests/**/coverage/
 tests/e2e/reports
 selenium-debug.log
 
+flower-admin/src/main/resources/application.yml
+flower-admin/src/main/resources/application-druid.yml
+flower-admin/src/main/resources/*.properties
+
 # Editor directories and files
 .idea
 .vscode
