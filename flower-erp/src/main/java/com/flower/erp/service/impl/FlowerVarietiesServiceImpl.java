@@ -1,6 +1,10 @@
 package com.flower.erp.service.impl;
 
+import java.util.Date;
 import java.util.List;
+
+import com.flower.common.utils.SecurityUtils;
+import com.flower.common.utils.uuid.IdUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.flower.erp.mapper.FlowerVarietiesMapper;
@@ -52,6 +56,9 @@ public class FlowerVarietiesServiceImpl implements IFlowerVarietiesService
     @Override
     public int insertFlowerVarieties(FlowerVarieties flowerVarieties)
     {
+        flowerVarieties.setId(IdUtils.fastSimpleUUID());
+        flowerVarieties.setCreator(SecurityUtils.getUsername());
+        flowerVarieties.setCreateDatetime(new Date());
         return flowerVarietiesMapper.insertFlowerVarieties(flowerVarieties);
     }
 

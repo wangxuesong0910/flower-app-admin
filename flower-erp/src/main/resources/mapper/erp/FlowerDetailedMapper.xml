@@ -11,12 +11,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="ascriptionId"    column="ascription_id"    />
         <result property="varietiesId"    column="varieties_id"    />
         <result property="creator"    column="creator"    />
+        <result property="img"    column="img"    />
         <result property="createDatetime"    column="create_datetime"    />
         <result property="modifyDatetime"    column="modify_datetime"    />
     </resultMap>
 
     <sql id="selectFlowerDetailedVo">
-        select id, type, color, ascription_id, varieties_id, creator, create_datetime, modify_datetime from flower_detailed
+        select id, type, color, ascription_id, varieties_id, creator, create_datetime, modify_datetime,img from flower_detailed
     </sql>
 
     <select id="selectFlowerDetailedList" parameterType="FlowerDetailed" resultMap="FlowerDetailedResult">
@@ -48,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="creator != null and creator != ''">creator,</if>
             <if test="createDatetime != null">create_datetime,</if>
             <if test="modifyDatetime != null">modify_datetime,</if>
+            <if test="img != null">img,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -58,6 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="creator != null and creator != ''">#{creator},</if>
             <if test="createDatetime != null">#{createDatetime},</if>
             <if test="modifyDatetime != null">#{modifyDatetime},</if>
+            <if test="img != null">#{img},</if>
          </trim>
     </insert>
 
@@ -71,6 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="creator != null and creator != ''">creator = #{creator},</if>
             <if test="createDatetime != null">create_datetime = #{createDatetime},</if>
             <if test="modifyDatetime != null">modify_datetime = #{modifyDatetime},</if>
+            <if test="img != null">img = #{img},</if>
         </trim>
         where id = #{id}
     </update>

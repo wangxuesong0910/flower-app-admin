@@ -1,6 +1,10 @@
 package com.flower.erp.service.impl;
 
+import java.util.Date;
 import java.util.List;
+
+import com.flower.common.utils.SecurityUtils;
+import com.flower.common.utils.uuid.IdUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.flower.erp.mapper.FlowerAscriptionMapper;
@@ -52,6 +56,9 @@ public class FlowerAscriptionServiceImpl implements IFlowerAscriptionService
     @Override
     public int insertFlowerAscription(FlowerAscription flowerAscription)
     {
+        flowerAscription.setId(IdUtils.fastSimpleUUID());
+        flowerAscription.setCreateDatetime(new Date());
+        flowerAscription.setCreator(SecurityUtils.getUsername());
         return flowerAscriptionMapper.insertFlowerAscription(flowerAscription);
     }
 

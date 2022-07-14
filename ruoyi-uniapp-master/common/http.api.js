@@ -63,6 +63,14 @@ const install = (Vue, vm) => {
 			contentListData: (params) => vm.$u.get(config.adminPath+'/erp/detailed/list',params),
 			//二级分类添加的一级分类下拉框内容
 			ascriptionList: () => vm.$u.get(config.adminPath+'/erp/ascription/list'),
+			//一级分类新增
+			submitLeftForm: (params = {}) => vm.$u.postJson(config.adminPath+'/erp/ascription', params),
+			//二级分类新增
+			submitRightForm: (params = {}) => vm.$u.postJson(config.adminPath+'/erp/varieties', params),
+			//三级分类添加的二级分类下拉框内容
+			varietiesList: () => vm.$u.get(config.adminPath+'/erp/varieties/list'),
+			//三级分类新增
+			submitCenterForm: (params = {}) => vm.$u.postJson(config.adminPath+'/erp/detailed', params),
 		},
 		
 		// 组织机构查询

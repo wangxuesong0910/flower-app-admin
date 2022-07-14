@@ -50,7 +50,19 @@ public class FlowerDetailed extends BaseEntity
     @Excel(name = "修改时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date modifyDatetime;
 
-    public void setId(String id) 
+    /** 图片 */
+    @Excel(name = "图片")
+    private String img;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public void setId(String id)
     {
         this.id = id;
     }
@@ -132,6 +144,7 @@ public class FlowerDetailed extends BaseEntity
             .append("ascriptionId", getAscriptionId())
             .append("varietiesId", getVarietiesId())
             .append("creator", getCreator())
+            .append("img", getImg())
             .append("createDatetime", getCreateDatetime())
             .append("modifyDatetime", getModifyDatetime())
             .toString();

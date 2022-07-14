@@ -1,8 +1,13 @@
 package com.flower.erp.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import com.flower.common.utils.SecurityUtils;
+import com.flower.common.utils.uuid.IdUtils;
+import com.flower.erp.domain.FlowerVarieties;
 import com.flower.erp.domain.bo.FlowerDetailedBo;
+import com.flower.erp.mapper.FlowerVarietiesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.flower.erp.mapper.FlowerDetailedMapper;
@@ -20,6 +25,9 @@ public class FlowerDetailedServiceImpl implements IFlowerDetailedService
 {
     @Autowired
     private FlowerDetailedMapper flowerDetailedMapper;
+
+    @Autowired
+    private FlowerVarietiesMapper flowerVarietiesMapper;
 
     /**
      * 查询花的种类：例如：玫瑰属：卡罗拉、白玫瑰、紫玫瑰(三级分类)
@@ -54,6 +62,13 @@ public class FlowerDetailedServiceImpl implements IFlowerDetailedService
     @Override
     public int insertFlowerDetailed(FlowerDetailed flowerDetailed)
     {
+        if (flowerDetailed.getAscriptionId()==null || flowerDetailed.getAscriptionId().equals("")){
+            FlowerVarieties flowerVarieties = flowerVarietiesMapper.selectFlowerVarietiesById(flowerDetailed.getVarietiesId());
+            flowerDetailed.setAscriptionId(flowerVarieties.getAscriptionId());
+        }
+        flowerDetailed.setId(IdUtils.fastSimpleUUID());
+        flowerDetailed.setCreator(SecurityUtils.getUsername());
+        flowerDetailed.setCreateDatetime(new Date());
         return flowerDetailedMapper.insertFlowerDetailed(flowerDetailed);
     }
 
