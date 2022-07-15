@@ -29,7 +29,7 @@
 				</u-form>
 			</u-modal>
 			<!-- 添加三级分类 -->
-			<u-modal v-model="centerShow" width="80%" title="分类添加" confirm-text="添加" :show-cancel-button="modalClose"
+			<u-modal :z-index="100" v-model="centerShow" width="80%" title="分类添加" confirm-text="添加" :show-cancel-button="modalClose"
 				@confirm="submitCenterForm">
 				<u-form :model="centerForm" ref="centerForm" class="apply-form-field">
 					<u-gap height="20" bg-color="#f5f5f5"></u-gap>
@@ -58,10 +58,22 @@
 						<u-input placeholder="请输入" type="input" v-model="centerForm.color"/>
 					</u-form-item>
 					<u-form-item label="图片" label-width="150">
-						<u-upload :action="action"  ></u-upload>
+						<view class="u-demo-block__content">
+							<view class="u-page__upload-item">
+							<u-upload
+							ref="uUpload"
+							:file-list="fileList1"
+							:header="header"
+								:action="action" 
+								:auto-upload="autoUpload"
+							    name="img"
+								:formData="formData"
+							    multiple
+								max-count="1"
+							></u-upload>
+							</view>
+						</view>
 					</u-form-item>
-					
-
 				</u-form>
 			</u-modal>
 			<u-gap height="20" bg-color="#f5f5f5"></u-gap>
@@ -137,6 +149,7 @@
 	export default {
 		data() {
 			return {
+				fileList1: [],
 				buttonStyle: {
 					width: '130rpx',
 					alignItem: 'center',
@@ -148,7 +161,17 @@
 				leftShow: false,
 				rightShow: false,
 				centerShow: false,
-				action: 'http://www.example.com/upload',
+				//自动上传设置为false
+				autoUpload: false,
+				action: 'http://127.0.0.1:8080/erp/core/detailImgUpload',
+				 header: {
+				    'Authorization': this.$store.state.vuex_token,
+				},
+				//三级分类图片名
+
+				formData: {
+					fileName:"detailImg"
+				},
 				list: [{
 					name: '添加品种'
 				}, {
@@ -204,7 +227,21 @@
 			this.getList()
 		},
 		created() {},
+		 computed: {
+		   
+		  },
 		methods: {
+			// 删除图片
+			deletePic() {
+				console.log("=====>"+JSON.stringify(this.fileList1))
+				this.$refs.uUpload.clear();
+			},
+			// 新增图片
+			async afterRead(event) {
+				console.log("=====>"+JSON.stringify(this.fileList1))
+				this.$refs.uUpload.upload();
+			},
+			
 			// 查询二级列表
 			getList() {
 				this.$u.api.repository.titleListData({}).then(res => {
@@ -309,6 +346,7 @@
 			submitCenterForm() {
 				this.centerForm.varietiesId = this.typeList[this.value];
 				this.$u.api.repository.submitCenterForm(JSON.stringify(this.centerForm));
+				this.$refs.uUpload.upload();
 			}
 		}
 	}
@@ -319,6 +357,7 @@
 	page {
 		background-color: #f5f5f5;
 	}
+	
 
 	.u-card-wrap {
 		background-color: $u-bg-color;

@@ -4,15 +4,18 @@ import com.flower.common.core.controller.BaseController;
 import com.flower.common.core.domain.AjaxResult;
 import com.flower.common.core.domain.model.TencentBucket;
 import com.flower.common.core.page.TableDataInfo;
+import com.flower.common.utils.SecurityUtils;
+import com.flower.common.utils.file.FileUploadUtils;
 import com.flower.erp.domain.FlowerAscription;
 import com.flower.erp.domain.bo.FlowerDetailedBo;
 import com.flower.erp.service.IFlowerCoreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.flower.common.utils.PageUtils.startPage;
@@ -37,11 +40,10 @@ public class FlowerCoreController extends BaseController {
         return getDataTable(flowerDetailedBoList);
     }
 
-    @GetMapping("/bucket")
-    public AjaxResult bucket()
-    {
-//        TencentBucket titleListencentBucket = new TencentBucket();
-        return AjaxResult.success(tencentBucket);
+    @RequestMapping("/detailImgUpload")
+    public AjaxResult bucket(@RequestParam(value = "fileName", required = false)String fileName,@RequestParam(value = "img", required = false)MultipartFile multipartFile) throws IOException {
+        String upload = FileUploadUtils.upload(multipartFile,fileName);
+        return AjaxResult.success(upload);
     }
 
 }
