@@ -1,5 +1,8 @@
 <template>
 	<view class="wrap" style="padding-bottom: 60px;">
+		<view>
+			<u-toast ref="uToast" />
+		</view>
 		<u-tabs :list="list" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		<!-- 当前套餐 -->
 
@@ -29,16 +32,16 @@
 				</u-form>
 			</u-modal>
 			<!-- 添加三级分类 -->
-			<u-modal :z-index="100" v-model="centerShow" width="80%" title="分类添加" confirm-text="添加" :show-cancel-button="modalClose"
-				@confirm="submitCenterForm">
+			<u-modal :z-index="100" v-model="centerShow" width="80%" title="分类添加" confirm-text="添加"
+				:show-cancel-button="modalClose" :async-close="centerAsyncShow" @confirm="submitCenterForm">
 				<u-form :model="centerForm" ref="centerForm" class="apply-form-field">
 					<u-gap height="20" bg-color="#f5f5f5"></u-gap>
 					<!-- <u-form-item label="一级分类" label-width="150" right-icon="arrow-right">
 						<u-input placeholder="请选择" type="select" class="form-field-select" />
 					</u-form-item> -->
-				
+
 					<u-form-item label="二级分类" label-width="150" right-icon="arrow-right">
-				
+
 						<u-input v-model="value" placeholder="请选择" type="select" class="form-field-select"
 							@click="centerFormSelectOpen1" />
 						<u-action-sheet :list="centerFormSelectList" v-model="centerFormShow1"
@@ -52,25 +55,17 @@
 						<u-input placeholder="请选择" type="select" class="form-field-select" />
 					</u-form-item> -->
 					<u-form-item label="三级分类:" label-width="150">
-						<u-input placeholder="请输入" type="input" v-model="centerForm.type"/>
+						<u-input placeholder="请输入" type="input" v-model="centerForm.type" />
 					</u-form-item>
 					<u-form-item label="颜色:" label-width="150">
-						<u-input placeholder="请输入" type="input" v-model="centerForm.color"/>
+						<u-input placeholder="请输入" type="input" v-model="centerForm.color" />
 					</u-form-item>
 					<u-form-item label="图片" label-width="150">
 						<view class="u-demo-block__content">
 							<view class="u-page__upload-item">
-							<u-upload
-							ref="uUpload"
-							:file-list="fileList1"
-							:header="header"
-								:action="action" 
-								:auto-upload="autoUpload"
-							    name="img"
-								:formData="formData"
-							    multiple
-								max-count="1"
-							></u-upload>
+								<u-upload ref="uUpload" :file-list="fileList1" :header="header" :action="action"
+									:auto-upload="autoUpload" name="img" :formData="formData" multiple max-count="1">
+								</u-upload>
 							</view>
 						</view>
 					</u-form-item>
@@ -97,7 +92,7 @@
 					</u-button>
 				</u-col>
 			</u-row>
-			
+
 			<u-row gutter="32" class="bottom-box" justify="center">
 				<u-col span="10">
 					<view>
@@ -112,12 +107,13 @@
 			</view>-->
 			<!--			种类列表界面-->
 
-			<u-card :title-color="'#40c9c6'" :sub-title="item.createDatetime" :title="item.varieties"
+			<!-- <u-card :title-color="'#40c9c6'" :sub-title="item.createDatetime" :title="item.varieties"
 				v-for="(item, index) in titleList" :key="index" @head-click="open(item.id)">
 
 				<view class="" slot="body">
 					<u-read-more ref="uReadMore" :toggle="true" open-text="收起" close-text="展开">
-						<view class="u-body-item  u-border-bottom u-col-between u-p-t-0"
+						<u-swipe-action :show="swipeShow" :btn-width="btnWidth" :options="options"
+							class="u-body-item  u-border-bottom u-col-between u-p-t-0"
 							v-for="(item1, index1) in contentList[item.id]" :key="index1">
 
 							<u-row gutter="2">
@@ -129,19 +125,43 @@
 									<view class="u-body-item-title u-line-2">{{item1.createDatetime}}</view>
 								</u-col>
 								<u-col span="3">
-									<image
-										src="https://img11.360buyimg.com/n7/jfs/t1/94448/29/2734/524808/5dd4cc16E990dfb6b/59c256f85a8c3757.jpg"
-										mode="aspectFill"></image>
+									<image :src="item1.img"></image>
 								</u-col>
 							</u-row>
-						</view>
+						</u-swipe-action>
 					</u-read-more>
 
 				</view>
 				<view class="" slot="foot">
 					<u-icon name="chat-fill" size="34" color="" label="30评论"></u-icon>
 				</view>
-			</u-card>
+			</u-card> -->
+			<view class="u-demo-wrap" v-for="(item, index) in titleList" :key="index">
+				<view class="u-demo-area" >
+					<u-toast ref="uToast"></u-toast>
+					<u-swipe-action
+						bg-color="rgb(250, 250, 250)"
+						@click="click"
+						v-for="(item1, index1) in contentList[item.id]" 
+						:index="index1"
+						:key="index1"
+						:show="swipeShow"
+						:btn-width="btnWidth"
+						:options="options"
+					>
+						<view class="item u-border-bottom" >
+							<image mode="aspectFill" :src="item1.img" />
+							<!-- 此层wrap在此为必写的，否则可能会出现标题定位错误 -->
+							<view class="title-wrap">
+								<text class="title u-line-2">{{ item1.type }}</text>
+							</view>
+							<view class="title-wrap">
+								<text class="title u-line-2">{{ item1.createDatetime }}</text>
+							</view>
+						</view>
+					</u-swipe-action>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -149,6 +169,21 @@
 	export default {
 		data() {
 			return {
+				swipeShow: false,
+				btnWidth: 180,
+				options: [{
+						text: '修改',
+						style: {
+							backgroundColor: '#18b566'
+						}
+					},
+					{
+						text: '删除',
+						style: {
+							backgroundColor: '#dd524d'
+						}
+					}
+				],
 				fileList1: [],
 				buttonStyle: {
 					width: '130rpx',
@@ -161,16 +196,17 @@
 				leftShow: false,
 				rightShow: false,
 				centerShow: false,
+				centerAsyncShow: true,
 				//自动上传设置为false
 				autoUpload: false,
-				action: 'http://127.0.0.1:8080/erp/core/detailImgUpload',
-				 header: {
-				    'Authorization': this.$store.state.vuex_token,
+				action: '/erp/core/detailImgUpload',
+				header: {
+					'Authorization': this.$store.state.vuex_token,
 				},
 				//三级分类图片名
 
 				formData: {
-					fileName:"detailImg"
+					fileName: "detailImg"
 				},
 				list: [{
 					name: '添加品种'
@@ -220,30 +256,44 @@
 				centerFormShow1: false,
 				centerFormSelectList: [],
 				typeList: {},
+				detailImg: {
+					fileName: 'detailImg',
+					img: ''
+				},
 			}
 		},
 
 		onLoad() {
-			this.getList()
+			this.getList();
+			this.action = this.vuex_config.baseUrl + this.action;
 		},
 		created() {},
-		 computed: {
-		   
-		  },
+		computed: {
+
+		},
 		methods: {
+			click(index, index1) {
+				if(index1 == 1) {
+					console.log("========>"+index);
+					this.$u.toast(`删除了第${index}个cell`);
+				} else {
+					this.contentList[index].show = false;
+					this.$u.toast(`收藏成功`);
+				}
+			},
 			// 删除图片
 			deletePic() {
-				console.log("=====>"+JSON.stringify(this.fileList1))
+
 				this.$refs.uUpload.clear();
 			},
 			// 新增图片
 			async afterRead(event) {
-				console.log("=====>"+JSON.stringify(this.fileList1))
 				this.$refs.uUpload.upload();
 			},
-			
+
 			// 查询二级列表
 			getList() {
+				// console.log("----->"+JSON.stringify(this.vuex_config.baseUrl))
 				this.$u.api.repository.titleListData({}).then(res => {
 					this.titleList = res.rows;
 					for (let i = 0; i < this.titleList.length; i++) {
@@ -299,7 +349,7 @@
 
 				this.centerShow = true;
 				//查二级分类对应的一级分类，自动填写一级分类
-				
+
 
 				this.$u.api.repository.varietiesList({}).then(res => {
 
@@ -324,7 +374,7 @@
 			centerFormSelectOpen1() {
 				this.centerFormShow1 = true;
 			},
-			
+
 			// 点击actionSheet回调
 			rightFormSelectCallback1(index) {
 				this.value = this.rightFormSelectList[index].text;
@@ -335,18 +385,107 @@
 			},
 			//一级分类表单提交
 			submitLeftForm() {
-				this.$u.api.repository.submitLeftForm(JSON.stringify(this.leftForm));
+				this.$u.api.repository.submitLeftForm(JSON.stringify(this.leftForm)).then(res => {
+					if (res.code != 200) {
+						this.$refs.uToast.show({
+							title: '添加失败',
+							// 如果不传此type参数，默认为default，也可以手动写上 type: 'default'
+							type: 'error',
+							// 如果不需要图标，请设置为false
+							// icon: false
+							position: "center",
+						});
+						setTimeout(() => {
+							this.centerShow = false;
+						}, 1000)
+
+
+					} else {
+						// 如果没有错误，也要执行回调
+						this.$refs.uToast.show({
+							title: '添加成功',
+							// 如果不传此type参数，默认为default，也可以手动写上 type: 'default'
+							type: 'error',
+							// 如果不需要图标，请设置为false
+							// icon: false
+							position: "success",
+						});
+						setTimeout(() => {
+							this.centerShow = false;
+						}, 1000)
+					}
+				});
 			},
 			// 二级分类表单提交
 			submitRightForm() {
 				this.rightForm.ascriptionId = this.varietiesList[this.value];
-				this.$u.api.repository.submitRightForm(JSON.stringify(this.rightForm));
+				this.$u.api.repository.submitRightForm(JSON.stringify(this.rightForm)).then(res => {
+					if (res.code != 200) {
+						this.$refs.uToast.show({
+							title: '添加失败',
+							// 如果不传此type参数，默认为default，也可以手动写上 type: 'default'
+							type: 'error',
+							// 如果不需要图标，请设置为false
+							// icon: false
+							position: "center",
+						});
+						setTimeout(() => {
+							this.centerShow = false;
+						}, 1000)
+
+
+					} else {
+						// 如果没有错误，也要执行回调
+						this.$refs.uToast.show({
+							title: '添加成功',
+							// 如果不传此type参数，默认为default，也可以手动写上 type: 'default'
+							type: 'error',
+							// 如果不需要图标，请设置为false
+							// icon: false
+							position: "success",
+						});
+						setTimeout(() => {
+							this.centerShow = false;
+						}, 1000)
+					}
+				});
 			},
 			// 三级分类表单提交
 			submitCenterForm() {
 				this.centerForm.varietiesId = this.typeList[this.value];
-				this.$u.api.repository.submitCenterForm(JSON.stringify(this.centerForm));
 				this.$refs.uUpload.upload();
+				this.$u.api.repository.submitCenterForm(JSON.stringify(this.centerForm)).then(res => {
+					// 如果验证出错，需要抛出new Error('错误提示信息')
+					if (res.code != 200) {
+						this.$refs.uToast.show({
+							title: '添加失败',
+							// 如果不传此type参数，默认为default，也可以手动写上 type: 'default'
+							type: 'error',
+							// 如果不需要图标，请设置为false
+							// icon: false
+							position: "center",
+						});
+						setTimeout(() => {
+							this.centerShow = false;
+						}, 1000)
+
+
+					} else {
+						// 如果没有错误，也要执行回调
+						this.$refs.uToast.show({
+							title: '添加成功',
+							// 如果不传此type参数，默认为default，也可以手动写上 type: 'default'
+							type: 'error',
+							// 如果不需要图标，请设置为false
+							// icon: false
+							position: "success",
+						});
+						setTimeout(() => {
+							this.centerShow = false;
+						}, 1000)
+					}
+				});
+
 			}
 		}
 	}
@@ -357,8 +496,26 @@
 	page {
 		background-color: #f5f5f5;
 	}
-	
+.item {
+	display: flex;
+	padding: 20rpx;
+}
 
+image {
+	width: 120rpx;
+	flex: 0 0 120rpx;
+	height: 120rpx;
+	margin-right: 20rpx;
+	border-radius: 12rpx;
+}
+
+.title {
+	text-align: left;
+	font-size: 28rpx;
+	color: $u-content-color;
+	margin-top: 35px;
+	margin-left: 50px;
+}
 	.u-card-wrap {
 		background-color: $u-bg-color;
 		padding: 1px;

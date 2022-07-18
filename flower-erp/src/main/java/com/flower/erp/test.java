@@ -11,6 +11,8 @@ import com.qcloud.cos.model.*;
 import com.qcloud.cos.region.Region;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -61,6 +63,7 @@ public class test {
         String key = "flower/detail/meigui.jpg";
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, localFile);
         PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
+
         System.out.println("=====>"+putObjectResult);
     }
 }

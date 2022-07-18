@@ -71,6 +71,8 @@ const install = (Vue, vm) => {
 			varietiesList: () => vm.$u.get(config.adminPath+'/erp/varieties/list'),
 			//三级分类新增
 			submitCenterForm: (params = {}) => vm.$u.postJson(config.adminPath+'/erp/detailed', params),
+			//upLoadImg
+			upLoadDetailImg: (params = {}) => vm.$u.post(config.adminPath+'/erp/core/detailImgUpload', params),
 		},
 		
 		// 组织机构查询
