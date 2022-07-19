@@ -58,7 +58,7 @@ const install = (Vue, vm) => {
 		// 品种管理
 		repository: {
 			// 品种列表card的表头
-			titleListData: () => vm.$u.get(config.adminPath+'/erp/varieties/list'),
+			titleListData: (params) => vm.$u.get(config.adminPath+'/erp/varieties/list',params),
 			// 品种列表card的内容
 			contentListData: (params) => vm.$u.get(config.adminPath+'/erp/detailed/list',params),
 			//二级分类添加的一级分类下拉框内容
@@ -73,6 +73,8 @@ const install = (Vue, vm) => {
 			submitCenterForm: (params = {}) => vm.$u.postJson(config.adminPath+'/erp/detailed', params),
 			//upLoadImg
 			upLoadDetailImg: (params = {}) => vm.$u.post(config.adminPath+'/erp/core/detailImgUpload', params),
+			//删除三级分类
+			deleteDetailById: (params = {}) => vm.$u.delete(config.adminPath+'/erp/detailed/'+params),
 		},
 		
 		// 组织机构查询

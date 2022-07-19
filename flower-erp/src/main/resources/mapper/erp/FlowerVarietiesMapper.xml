@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createDatetime != null "> and create_datetime = #{createDatetime}</if>
             <if test="modifyDatetime != null "> and modify_datetime = #{modifyDatetime}</if>
         </where>
+        order by id
     </select>
     
     <select id="selectFlowerVarietiesById" parameterType="String" resultMap="FlowerVarietiesResult">

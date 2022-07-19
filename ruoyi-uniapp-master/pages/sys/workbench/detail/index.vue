@@ -137,19 +137,13 @@
 				</view>
 			</u-card> -->
 			<view class="u-demo-wrap" v-for="(item, index) in titleList" :key="index">
-				<view class="u-demo-area" >
+				<u-divider color="#fa3534" half-width="200" border-color="#6d6d6d">{{item.varieties}}</u-divider>
+				<view class="u-demo-area">
 					<u-toast ref="uToast"></u-toast>
-					<u-swipe-action
-						bg-color="rgb(250, 250, 250)"
-						@click="click"
-						v-for="(item1, index1) in contentList[item.id]" 
-						:index="index1"
-						:key="index1"
-						:show="swipeShow"
-						:btn-width="btnWidth"
-						:options="options"
-					>
-						<view class="item u-border-bottom" >
+					<u-swipe-action bg-color="rgb(250, 250, 250)" @click="click"
+						v-for="(item1, index1) in contentList[item.id]" :index="item1.id" :key="index1"
+						:show="swipeShow" :btn-width="btnWidth" :options="options">
+						<view class="item u-border-bottom">
 							<image mode="aspectFill" :src="item1.img" />
 							<!-- 此层wrap在此为必写的，否则可能会出现标题定位错误 -->
 							<view class="title-wrap">
@@ -162,6 +156,8 @@
 					</u-swipe-action>
 				</view>
 			</view>
+			<u-loadmore :status="status" @loadmore="loadmore()" @onReachBottom="onReachBottom()"
+				:load-text="loadText" />
 		</view>
 	</view>
 </template>
@@ -169,12 +165,16 @@
 	export default {
 		data() {
 			return {
+				// 选中数组
+				ids: [],
+				onReadchBottomStatus: true,
+				status: 'loadmore',
 				swipeShow: false,
 				btnWidth: 180,
 				options: [{
 						text: '修改',
 						style: {
-							backgroundColor: '#18b566'
+							backgroundColor: '#82848a'
 						}
 					},
 					{
@@ -231,10 +231,19 @@
 				//二级分类数组
 				varietiesList: {},
 				contentList: {},
+				// 查询花的品种科属：玫瑰、百合等等，蔷薇科等
+				queryParamsVarieties: {
+					pageNum: 1,
+					pageSize: 3,
+					varieties: null,
+					creator: null,
+					ascriptionId: null,
+					createDatetime: null,
+					modifyDatetime: null
+				},
 				// 查询参数
 				queryParams: {
-					pageNum: 1,
-					pageSize: 10,
+	
 					type: null,
 					color: null,
 					ascriptionId: null,
@@ -272,18 +281,37 @@
 
 		},
 		methods: {
+			//上拉触发，加载更多
+			onReachBottom() {
+				if (this.status != 'nomore') {
+					this.status = 'loading'
+					this.getList();
+				}
+			},
+			//加载更多，点击触发
+			loadmore(e) {
+
+				this.status = 'loading'
+				// this.queryParamsVarieties.pageNum = ++this.queryParamsVarieties.pageNum;
+				this.getList();
+
+
+			},
 			click(index, index1) {
-				if(index1 == 1) {
-					console.log("========>"+index);
-					this.$u.toast(`删除了第${index}个cell`);
+
+				if (index1 == 1) {
+					const ids = index || this.ids;
+					this.$u.api.repository.deleteDetailById(ids).then(res => {
+						this.$u.toast(`删除成功`);
+					})
+					
 				} else {
-					this.contentList[index].show = false;
-					this.$u.toast(`收藏成功`);
+					// this.contentList[index].show = false;
+					this.$u.toast(`修改暂不可用`);
 				}
 			},
 			// 删除图片
 			deletePic() {
-
 				this.$refs.uUpload.clear();
 			},
 			// 新增图片
@@ -294,19 +322,30 @@
 			// 查询二级列表
 			getList() {
 				// console.log("----->"+JSON.stringify(this.vuex_config.baseUrl))
-				this.$u.api.repository.titleListData({}).then(res => {
-					this.titleList = res.rows;
+				this.$u.api.repository.titleListData(this.queryParamsVarieties).then(res => {
+
+					if (this.queryParamsVarieties.pageNum * 3 > res.total) {
+						this.status = 'nomore'
+					} else {
+						this.queryParamsVarieties.pageNum = ++this.queryParamsVarieties.pageNum;
+						this.status = 'loadmore'
+					}
+
+					for (let i = 0; i < res.rows.length; i++) {
+						this.titleList.push(res.rows[i]);
+					}
+
+					// this.titleList = res.rows;
 					for (let i = 0; i < this.titleList.length; i++) {
 						this.queryParams.varietiesId = this.titleList[i].id;
 						this.getContentList(this.queryParams);
 					}
 
 				});
-
-
 			},
 			//获取三级列表
 			getContentList(queryParams) {
+
 				let vid = queryParams.varietiesId;
 				this.$u.api.repository.contentListData(
 					queryParams
@@ -486,7 +525,9 @@
 					}
 				});
 
-			}
+			},
+
+
 		}
 	}
 </script>
@@ -496,26 +537,28 @@
 	page {
 		background-color: #f5f5f5;
 	}
-.item {
-	display: flex;
-	padding: 20rpx;
-}
 
-image {
-	width: 120rpx;
-	flex: 0 0 120rpx;
-	height: 120rpx;
-	margin-right: 20rpx;
-	border-radius: 12rpx;
-}
+	.item {
+		display: flex;
+		padding: 20rpx;
+	}
 
-.title {
-	text-align: left;
-	font-size: 28rpx;
-	color: $u-content-color;
-	margin-top: 35px;
-	margin-left: 50px;
-}
+	image {
+		width: 120rpx;
+		flex: 0 0 120rpx;
+		height: 120rpx;
+		margin-right: 20rpx;
+		border-radius: 12rpx;
+	}
+
+	.title {
+		text-align: left;
+		font-size: 28rpx;
+		color: $u-content-color;
+		margin-top: 35px;
+		margin-left: 50px;
+	}
+
 	.u-card-wrap {
 		background-color: $u-bg-color;
 		padding: 1px;
