@@ -76,7 +76,10 @@ const install = (Vue, vm) => {
 			//删除三级分类
 			deleteDetailById: (params = {}) => vm.$u.delete(config.adminPath+'/erp/detailed/'+params),
 		},
-		
+		//入库管理
+		put: {
+			appDetailSelectList: () => vm.$u.get(config.adminPath+'/erp/detailed/appDetailSelectList'),
+		},
 		// 组织机构查询
 		office: {
 			treeData: (params = {}) => vm.$u.get(config.adminPath+'/sys/office/treeData', params),

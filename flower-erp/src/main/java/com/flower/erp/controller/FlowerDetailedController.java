@@ -1,6 +1,7 @@
 package com.flower.erp.controller;
 
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import com.flower.erp.domain.bo.FlowerDetailedBo;
@@ -117,6 +118,20 @@ public class FlowerDetailedController extends BaseController
         startPage();
         List<FlowerDetailedBo> flowerDetailedBos = flowerDetailedService.selectFlowerDetailedBo(flowerDetailed);
         return getDataTable(flowerDetailedBos);
+    }
+
+    /**
+     * 查询花的种类：例如：玫瑰属：卡罗拉、白玫瑰、紫玫瑰(三级分类)列表
+     * 为app界面入库下拉框做筛选
+     */
+    @PreAuthorize("@ss.hasPermi('erp:detailed:list')")
+    @GetMapping("/appDetailSelectList")
+    public TableDataInfo appDetailSelectList()
+    {
+//        startPage();
+//        List<FlowerDetailed> list = flowerDetailedService.selectFlowerDetailedList();
+        List<Map<String, Object>> maps = flowerDetailedService.appDetailSelectList();
+        return getDataTable(maps);
     }
 
 }

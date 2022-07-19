@@ -10,8 +10,11 @@
 					<u-input placeholder="请选择" type="select" class="form-field-select" />
 				</u-form-item> -->
 
-				<u-form-item label="三级分类" label-width="150" right-icon="arrow-right">
-					<u-input placeholder="请选择" type="select" class="form-field-select" />
+				<u-form-item label="三级分类" label-width="130">
+					<u-input v-model="detailSelectValue" type="select" @click="detailSelectListOpen" />
+					<u-action-sheet :list="appDetailSelectList" v-model="appDetailSelectListShow"
+						@click="detailSelectCallback1"></u-action-sheet>
+					<!-- <u-input placeholder="请选择一级分类" v-model="list.name" type="select" class="form-field-select" /> -->
 				</u-form-item>
 				<!-- <u-gap height="20" bg-color="#f5f5f5"></u-gap>
 				<u-form-item label="开始时间" label-width="150" right-icon="arrow-right">
@@ -23,9 +26,9 @@
 				<u-form-item label="数量" label-width="150" >
 					<u-input placeholder="请输入" type="input" />
 				</u-form-item>
-				<u-form-item label="批发方式" label-width="150" right-icon="arrow-right">
+<!-- 				<u-form-item label="批发方式" label-width="150" right-icon="arrow-right">
 					<u-input placeholder="请选择" type="select" class="form-field-select" />
-				</u-form-item>
+				</u-form-item> -->
 				<u-form-item label="进货价" label-width="150" >
 					<u-input placeholder="请输入" type="input" />
 				</u-form-item>
@@ -54,7 +57,9 @@
 		data() {
 			return {
 				value: '',
+				detailSelectValue: '',
 				gradeListShow: false,
+				appDetailSelectListShow: false,
 				show: false,
 				list: [{
 					name: '批发入库'
@@ -65,6 +70,8 @@
 				},{
 					text: 'B'
 				}],
+				//三级分类下拉列表
+				appDetailSelectList:[],
 				m2mSimflowList: [],
 				m2mOrderFlowList: [],
 				current: 0,
@@ -90,14 +97,30 @@
 				form:{}
 			}
 		},
+		onLoad() {
+			this.getAppDetailSelect();
+		},
 		created() {},
 		methods: {
+			getAppDetailSelect(){
+				this.$u.api.put.appDetailSelectList({
+				}).then(res => {
+					this.appDetailSelectList = res.rows;
+				})
+			},
 			// 点击actionSheet回调
 			gradeSelectCallback1(index) {
 				this.value = this.gradeList[index].text;
 			},
+			// 点击actionSheet回调
+			detailSelectCallback1(index) {
+				this.detailSelectValue = this.appDetailSelectList[index].text;
+			},
 			gradeListOpen(){
 				this.gradeListShow = true;
+			},
+			detailSelectListOpen(){
+				this.appDetailSelectListShow = true;
 			},
 			change(index) {
 				this.current = index;

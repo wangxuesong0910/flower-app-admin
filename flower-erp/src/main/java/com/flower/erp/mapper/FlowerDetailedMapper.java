@@ -1,6 +1,8 @@
 package com.flower.erp.mapper;
 
 import java.util.List;
+import java.util.Map;
+
 import com.flower.erp.domain.FlowerDetailed;
 import com.flower.erp.domain.bo.FlowerDetailedBo;
 
@@ -73,5 +75,7 @@ public interface FlowerDetailedMapper
      * @return 结果
      */
     public List<String> selectFlowerDetailedType(String type);
+
+    public List<Map<String,Object>> appDetailSelectList();
     
 }

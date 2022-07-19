@@ -3,6 +3,7 @@ package com.flower.erp.service.impl;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.flower.common.core.domain.model.TencentBucket;
 import com.flower.common.utils.SecurityUtils;
@@ -160,5 +161,10 @@ public class FlowerDetailedServiceImpl implements IFlowerDetailedService
      */
     public List<String> selectFlowerDetailedType(String type){
         return flowerDetailedMapper.selectFlowerDetailedType(type);
+    }
+
+    @Override
+    public List<Map<String, Object>> appDetailSelectList() {
+        return flowerDetailedMapper.appDetailSelectList();
     }
 }

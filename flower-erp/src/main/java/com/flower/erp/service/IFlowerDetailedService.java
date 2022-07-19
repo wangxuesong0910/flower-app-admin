@@ -1,6 +1,9 @@
 package com.flower.erp.service;
 
 import java.util.List;
+import java.util.Map;
+
+import com.flower.common.core.page.TableDataInfo;
 import com.flower.erp.domain.FlowerDetailed;
 import com.flower.erp.domain.bo.FlowerDetailedBo;
 
@@ -73,4 +76,6 @@ public interface IFlowerDetailedService
      * @return 结果
      */
     public List<String> selectFlowerDetailedType(String type);
+
+    public List<Map<String,Object>> appDetailSelectList();
 }
