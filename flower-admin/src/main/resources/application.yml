@@ -69,7 +69,7 @@ spring:
     # 数据库索引
     database: 0
     # 密码
-    password: 123456
+    password: wo1021gstar
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -146,7 +146,7 @@ storage:
     secretId:
     secretKey:
     region: ap-nanjing
-    bucketName:
+    bucketName: 
     # 七牛云对象存储配置信息
   qiniu:
     endpoint: http://pd5cb6ulu.bkt.clouddn.com
