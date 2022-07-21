@@ -40,10 +40,45 @@ public class FlowerCoreController extends BaseController {
         return getDataTable(flowerDetailedBoList);
     }
 
+    /**
+     * 三级分类图片上传
+     * @param fileName 文件名：detailImg
+     * @param multipartFile 图片
+     * @return 上传结果
+     * @throws IOException
+     */
     @RequestMapping("/detailImgUpload")
     public AjaxResult bucket(@RequestParam(value = "fileName", required = false)String fileName,@RequestParam(value = "img", required = false)MultipartFile multipartFile) throws IOException {
         String upload = FileUploadUtils.upload(multipartFile,fileName);
         return AjaxResult.success(upload);
+    }
+
+    /**
+     * 删除三级分类前，需要查询其对应的flowe_store表中有与之关联的内容，如果有则不允许删除
+     * @param detailId 三级分类ID
+     * @return
+     */
+    @GetMapping("/deleteCheck")
+    public AjaxResult deleteCheck(@RequestParam(value = "detailId")String detailId){
+        return AjaxResult.success(service.deleteCheck(detailId));
+    }
+
+    /**
+     * 获取库存总数，app首页展示
+     * @return
+     */
+    @GetMapping("/getStoreQuantity")
+    public AjaxResult getStoreQuantity(){
+        return AjaxResult.success(service.getStoreQuantity());
+    }
+
+    /**
+     * 获取ucharts图标需要的对应数据以及格式
+     * @return
+     */
+    @GetMapping("/getUChartsStore")
+    public AjaxResult getUChartsStore(){
+        return AjaxResult.success(service.getUChartsStore());
     }
 
 }
