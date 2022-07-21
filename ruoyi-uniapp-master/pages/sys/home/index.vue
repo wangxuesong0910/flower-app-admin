@@ -19,7 +19,7 @@
 									style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 5rpx; color: rgba(0, 0, 0, 0.45);">
 									<!---->用户
 								</uni-view>
-								<uni-view class="u-tab-item u-line-1" style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 10rpx;font-weight: bold;">{{todoCount}}</uni-view>
+								<uni-view class="u-tab-item u-line-1" style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 10rpx;font-weight: bold;">{{userCount}}</uni-view>
 							</u-col>
 						</u-row>
 					</uni-view>
@@ -39,7 +39,7 @@
 									style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 5rpx; color: rgba(0, 0, 0, 0.45);">
 									<!---->库存
 								</uni-view>
-								<uni-view class="u-tab-item u-line-1" style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 10rpx;font-weight: bold;">{{todoCount}}</uni-view>
+								<uni-view class="u-tab-item u-line-1" style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 10rpx;font-weight: bold;">{{storeQuantity}}</uni-view>
 							</u-col>
 						</u-row>
 
@@ -61,7 +61,7 @@
 									style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 5rpx; color: rgba(0, 0, 0, 0.45);">
 									<!---->损坏
 								</uni-view>
-								<uni-view class="u-tab-item u-line-1" style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 10rpx;font-weight: bold;">{{todoCount}}</uni-view>
+								<uni-view class="u-tab-item u-line-1" style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 10rpx;font-weight: bold;">{{brokenCount}}</uni-view>
 							</u-col>
 						</u-row>
 
@@ -83,7 +83,7 @@
 									style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 5rpx; color: rgba(0, 0, 0, 0.45);">
 									<!---->订单
 								</uni-view>
-								<uni-view class="u-tab-item u-line-1" style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 10rpx;font-weight: bold;">{{todoCount}}</uni-view>
+								<uni-view class="u-tab-item u-line-1" style=" transition-duration: 0.5s; font-size: 15px; padding-left: 10rpx;margin-top: 10rpx;font-weight: bold;">{{orderCount}}</uni-view>
 							</u-col>
 						</u-row>
 
@@ -91,7 +91,17 @@
 				</u-col>
 			</u-row>
 		</view>
-
+		<view v-for="item in uChartDataList" >
+			<u-divider>{{item.series[0].data[0].varieties}}</u-divider>
+			<view class="charts-box">
+			    <qiun-data-charts 
+			      type="pie"
+			      :opts="opts"
+			      :chartData="item"
+			    />
+		</view>
+		
+  </view>
 		<u-divider>已经到底了</u-divider>
 	</view>
 
@@ -109,6 +119,29 @@
 		},
 		data() {
 			return {
+				orderCount: 0,
+				userCount: 3,
+				brokenCount: 0,
+				storeQuantity: 0,
+				uChartsStore: {},
+				chartData: {},
+				uChartDataList: [],
+				      //您可以通过修改 config-ucharts.js 文件中下标为 ['pie'] 的节点来配置全局默认参数，如都是默认参数，此处可以不传 opts 。实际应用过程中 opts 只需传入与全局默认参数中不一致的【某一个属性】即可实现同类型的图表显示不同的样式，达到页面简洁的需求。
+				      opts: {
+				        color: ["#FAC858","#EE6666","#FC8452","#1890FF","#91CB74","#73C0DE","#3CA272","#9A60B4","#ea7ccc","#9D84BD","#F5AF60","#D568A2","#492D77","#a6c1ee","#fbc2eb"],
+				        padding: [5,5,5,5],
+				        extra: {
+				          pie: {
+				            activeOpacity: 0.5,
+				            activeRadius: 10,
+				            offsetAngle: 0,
+				            labelWidth: 15,
+				            border: false,
+				            borderWidth: 3,
+				            borderColor: "#FFFFFF"
+				          }
+				        }
+				      },
 				show: false,
 				head: '/static/aidex/images/head.png',
 				imgList: [
@@ -134,7 +167,42 @@
 		onLoad() {
 
 		},
+		onReady() {
+			this.getServerData();
+		},
 		methods: {
+			getServerData() {
+				
+				//图标渲染
+				this.$u.api.homeInfo.listData().then(res=>{
+					this.uChartsStore = res.data;
+					for(let key in this.uChartsStore){
+						//打乱颜色排序，每次进入刷新首页颜色，避免单调
+						this.opts.color = this.opts.color.sort(function(){return Math.random()>0.5?-1:1;});
+						let tmp = {series:[{data:this.uChartsStore[key]}]}
+						this.uChartDataList.push(
+						JSON.parse(JSON.stringify(tmp))
+						)
+					}
+				});
+				//首页渲染
+				this.$u.api.homeInfo.getStoreQuantity().then(res=>{
+					this.storeQuantity = res.data
+				})
+			      //模拟从服务器获取数据时的延时
+			  //     setTimeout(() => {
+			  //       //模拟服务器返回数据，如果数据格式和标准格式不同，需自行按下面的格式拼接
+			  //       let res = {
+			  //           series: [
+			  //             {
+			  //               data: [{"name":"一班","value":50},{"name":"二班","value":30},{"name":"三班","value":20},{"name":"四班","value":18},{"name":"五班","value":8}]
+			  //             }
+			  //           ]
+			  //         };
+			  //       this.chartData = JSON.parse(JSON.stringify(res));
+					// console.log("===sss===>"+JSON.stringify(this.chartData))
+			  //     }, 500);
+			    },
 			navTo(url) {
 				uni.navigateTo({
 					url: url
@@ -151,7 +219,11 @@
 </script>
 <style lang="scss">
 	@import 'index.scss';
-
+/* 请根据实际需求修改父元素尺寸，组件自动识别宽高 */
+  .charts-box {
+    width: 100%;
+    height: 300px;
+  }
 	.u-demo-wrap {
 		border-width: 1px;
 		border-color: #ddd;

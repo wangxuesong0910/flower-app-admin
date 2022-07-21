@@ -90,6 +90,8 @@
 				show: false,
 				list: [{
 					name: '库存列表'
+				},{
+					name: '出入库记录'
 				}],
 				m2mSimflowList: [],
 				m2mOrderFlowList: [],

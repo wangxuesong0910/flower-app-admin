@@ -6,56 +6,29 @@
 		<view v-if="current === 0">
 			<u-form :model="form" class="apply-form-field">
 				<u-gap height="20" bg-color="#f5f5f5"></u-gap>
-				<u-form-item label="请假类型" label-width="150" right-icon="arrow-right">
+				<u-form-item label="三级分类" label-width="150" right-icon="arrow-right">
 					<u-input placeholder="请选择" type="select" class="form-field-select" />
 				</u-form-item>
 				<u-gap height="20" bg-color="#f5f5f5"></u-gap>
-				<u-form-item label="开始时间" label-width="150" right-icon="arrow-right">
+<!-- 				<u-form-item label="档次" label-width="150" right-icon="arrow-right">
 					<u-input placeholder="请选择" type="select" class="form-field-select" />
-				</u-form-item>
-				<u-form-item label="结束时间" label-width="150" right-icon="arrow-right">
-					<u-input placeholder="请选择" type="select" class="form-field-select" />
+				</u-form-item> -->
+				<u-form-item label="出库类型" label-width="45%" >
+					<!-- <u-input placeholder="正常出库,损坏出库" type="select" class="form-field-select" /> -->
+					<u-radio-group v-model="outStatusValue" >
+								<u-radio 
+									
+									v-for="(item, index) in outStatusList" :key="index" 
+									:name="item.name"
+									:disabled="item.disabled"
+								>
+									{{item.name}}
+								</u-radio>
+							</u-radio-group>
 				</u-form-item>
 				<u-gap height="20" bg-color="#f5f5f5"></u-gap>
-				<u-form-item label="请假事由" label-width="150"></u-form-item>
-				<u-form-item>
-					<u-input type="textarea" placeholder="请输入内容" />
-				</u-form-item>
-				<u-gap height="20" bg-color="#f5f5f5"></u-gap>
-				<u-form-item label="图片" label-width="150">
-					<view solt="right" style="flex:1;text-align: right;align-items: center;">
-						<i class="add-user iconfont icon-tupian"></i>
-					</view>
-				</u-form-item>
-				<u-gap height="20" bg-color="#f5f5f5"></u-gap>
-				<u-form-item label="选人处理人" label-width="150">
-					<view solt="right" style="flex:1;text-align: right;align-items: center;">
-						<i class="add-user iconfont icon-zengjia"></i>
-					</view>
-				</u-form-item>
-				<u-form-item>
-					<view class="personnel-list">
-						<view class="personnel-user">
-							<image class="user-images" src="/static/aidex/images/user01.png"></image>
-							<i class="iconfont icon-close-circle-fill"></i>
-						</view>
-						<view class="personnel-user">
-							<image class="user-images" src="/static/aidex/images/user02.png"></image>
-							<i class="iconfont icon-close-circle-fill"></i>
-						</view>
-						<view class="personnel-user">
-							<image class="user-images" src="/static/aidex/images/user03.png"></image>
-							<i class="iconfont icon-close-circle-fill"></i>
-						</view>
-						<view class="personnel-user">
-							<image class="user-images" src="/static/aidex/images/user04.png"></image>
-							<i class="iconfont icon-close-circle-fill"></i>
-						</view>
-						<view class="personnel-user">
-							<image class="user-images" src="/static/aidex/images/user05.png"></image>
-							<i class="iconfont icon-close-circle-fill"></i>
-						</view>
-					</view>
+				<u-form-item label="出库数量(扎)" label-width="70%">
+					<u-number-box v-model="value" @change="valChange"></u-number-box>
 				</u-form-item>
 			</u-form>
 			<u-row gutter="32" class="bottom-box" justify="center">
@@ -105,6 +78,18 @@
 	export default {
 		data() {
 			return {
+				outStatusValue: 'apple',
+				outStatusList: [
+				{
+					name: '正常出库',
+					disabled: false
+				},
+				{
+					name: '报损出库',
+					disabled: false
+				}
+			],
+				value: 0,
 				show: false,
 				list: [{
 					name: '出库单'
@@ -138,6 +123,12 @@
 		},
 		created() {},
 		methods: {
+			outStatusOpen(){
+				this.outStatusShow = true;
+			},
+			valChange(e) {
+							console.log('当前值为: ' + e.value)
+						},
 			change(index) {
 				this.current = index;
 			},

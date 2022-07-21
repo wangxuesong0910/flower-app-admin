@@ -51,6 +51,11 @@ const install = (Vue, vm) => {
 		empUser: {
 			listData: (params = {}) => vm.$u.get(config.adminPath+'/sys/empUser/listData', params),
 		},
+		// 首页查询
+		homeInfo: {
+			listData: () => vm.$u.get(config.adminPath+'/erp/core/getUChartsStore'),
+			getStoreQuantity: () => vm.$u.get(config.adminPath+'/erp/core/getStoreQuantity'),
+		},
 		// 仓储查询
 		storageListData: {
 			listData: (params = {}) => vm.$u.get(config.adminPath+'/erp/storage/list', params),

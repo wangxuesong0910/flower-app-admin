@@ -146,7 +146,7 @@ storage:
     secretId:
     secretKey:
     region: ap-nanjing
-    bucketName:
+    bucketName: 
     # 七牛云对象存储配置信息
   qiniu:
     endpoint: http://pd5cb6ulu.bkt.clouddn.com

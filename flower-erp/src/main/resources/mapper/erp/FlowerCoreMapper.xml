@@ -9,8 +9,26 @@
             ORDER BY id
     </select>
 
-    <select id="selectFlowerAscriptionById" parameterType="String">
-
+    <select id="deleteCheck" parameterType="String" resultType="int">
+        select count(*) from flower_storage fs
+        where fs.detailed_id = #{detailId}
     </select>
+
+    <select id="getStoreQuantity" resultType="int">
+        select sum(quantity) from flower_storage
+    </select>
+    
+    <select id="getUChartsStore" resultType="map">
+        select type as name,sum(quantity) as value,fv.varieties FROM flower_storage fs
+        LEFT JOIN
+        flower_detailed fd
+        on fd.id = fs.detailed_id
+        LEFT JOIN
+        flower_varieties fv
+        on fd.varieties_id = fv.id
+        GROUP BY fd.type
+        ORDER BY fv.varieties
+    </select>
+
 
 </mapper>
