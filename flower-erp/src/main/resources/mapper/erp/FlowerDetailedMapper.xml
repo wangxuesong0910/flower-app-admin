@@ -109,6 +109,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="appDetailSelectList" resultType="map">
-        select id,type as text from flower_detailed
+        select fv.varieties,fd.type as label,fd.id as value
+        from flower_detailed fd
+        LEFT JOIN
+        flower_varieties fv
+        on fd.varieties_id = fv.id
     </select>
 </mapper>

@@ -12,8 +12,9 @@
 
 				<u-form-item label="三级分类" label-width="130">
 					<u-input v-model="detailSelectValue" type="select" @click="detailSelectListOpen" />
-					<u-action-sheet :list="appDetailSelectList" v-model="appDetailSelectListShow"
-						@click="detailSelectCallback1"></u-action-sheet>
+					<!-- <u-action-sheet :list="appDetailSelectList" v-model="appDetailSelectListShow"
+						@click="detailSelectCallback1"></u-action-sheet> -->
+						<u-select v-model="appDetailSelectListShow" mode="mutil-column-auto" :list="appDetailSelectList"  @confirm="confirm"></u-select>
 					<!-- <u-input placeholder="请选择一级分类" v-model="list.name" type="select" class="form-field-select" /> -->
 				</u-form-item>
 				<!-- <u-gap height="20" bg-color="#f5f5f5"></u-gap>
@@ -72,6 +73,7 @@
 				}],
 				//三级分类下拉列表
 				appDetailSelectList:[],
+				appDetailSelectListTmp:[],
 				m2mSimflowList: [],
 				m2mOrderFlowList: [],
 				current: 0,
@@ -102,10 +104,25 @@
 		},
 		created() {},
 		methods: {
+			confirm(e) {
+							console.log(e);
+						},
 			getAppDetailSelect(){
 				this.$u.api.put.appDetailSelectList({
 				}).then(res => {
-					this.appDetailSelectList = res.rows;
+					
+					// this.appDetailSelectList = res.data;
+					
+					for(let key in res.data){
+						console.log("---->"+JSON.stringify(res.data[key]))
+						let tmp = {
+							value: key,
+							label: key,
+							children:res.data[key]
+						}
+						console.log("---->"+JSON.stringify(tmp))
+						this.appDetailSelectList.push(tmp);
+					}
 				})
 			},
 			// 点击actionSheet回调

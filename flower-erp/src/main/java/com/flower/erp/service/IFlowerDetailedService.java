@@ -77,5 +77,5 @@ public interface IFlowerDetailedService
      */
     public List<String> selectFlowerDetailedType(String type);
 
-    public List<Map<String,Object>> appDetailSelectList();
+    public Map<Object, List<Map<String, Object>>> appDetailSelectList();
 }

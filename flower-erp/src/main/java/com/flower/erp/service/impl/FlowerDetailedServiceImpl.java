@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.flower.common.core.domain.model.TencentBucket;
 import com.flower.common.utils.SecurityUtils;
@@ -164,7 +165,11 @@ public class FlowerDetailedServiceImpl implements IFlowerDetailedService
     }
 
     @Override
-    public List<Map<String, Object>> appDetailSelectList() {
-        return flowerDetailedMapper.appDetailSelectList();
+    public Map<Object, List<Map<String, Object>>> appDetailSelectList() {
+        List<Map<String, Object>> maps = flowerDetailedMapper.appDetailSelectList();
+        Map<Object, List<Map<String, Object>>> varieties = maps.stream().collect(Collectors.groupingBy(map -> {
+            return map.get("varieties");
+        }));
+        return varieties;
     }
 }

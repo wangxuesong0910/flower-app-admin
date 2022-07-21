@@ -126,12 +126,12 @@ public class FlowerDetailedController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('erp:detailed:list')")
     @GetMapping("/appDetailSelectList")
-    public TableDataInfo appDetailSelectList()
+    public AjaxResult appDetailSelectList()
     {
 //        startPage();
 //        List<FlowerDetailed> list = flowerDetailedService.selectFlowerDetailedList();
-        List<Map<String, Object>> maps = flowerDetailedService.appDetailSelectList();
-        return getDataTable(maps);
+        Map<Object, List<Map<String, Object>>> maps = flowerDetailedService.appDetailSelectList();
+        return AjaxResult.success(maps);
     }
 
 }
