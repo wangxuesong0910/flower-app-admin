@@ -17,4 +17,6 @@ public interface FlowerCoreMapper {
 
     List<Map<String,Object>> getUChartsStore();
 
+    List<Map<String,Object>> getDetailId(String detailId);
+
 }

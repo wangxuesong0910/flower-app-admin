@@ -84,6 +84,9 @@ const install = (Vue, vm) => {
 		//入库管理
 		put: {
 			appDetailSelectList: () => vm.$u.get(config.adminPath+'/erp/detailed/appDetailSelectList'),
+			putForm: (params = {}) => vm.$u.postJson(config.adminPath+'/erp/core/putForm', params),
+			//入库记录单
+			putLogList: (params = {}) => vm.$u.get(config.adminPath+'/erp/log/list', params),
 		},
 		// 组织机构查询
 		office: {

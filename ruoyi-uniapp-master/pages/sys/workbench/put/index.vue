@@ -4,14 +4,14 @@
 		<!-- 当前套餐 -->
 
 		<view v-if="current === 0">
-			<u-form :model="form" class="apply-form-field">
+			<u-form :model="putForm" class="apply-form-field">
 				<u-gap height="20" bg-color="#f5f5f5"></u-gap>
 <!-- 				<u-form-item label="一级分类" label-width="150" right-icon="arrow-right">
 					<u-input placeholder="请选择" type="select" class="form-field-select" />
 				</u-form-item> -->
 
 				<u-form-item label="三级分类" label-width="130">
-					<u-input v-model="detailSelectValue" type="select" @click="detailSelectListOpen" />
+					<u-input v-model="detailSelectValue" type="select" @click="detailSelectListOpen"/>
 					<!-- <u-action-sheet :list="appDetailSelectList" v-model="appDetailSelectListShow"
 						@click="detailSelectCallback1"></u-action-sheet> -->
 						<u-select v-model="appDetailSelectListShow" mode="mutil-column-auto" :list="appDetailSelectList"  @confirm="confirm"></u-select>
@@ -24,32 +24,63 @@
 				<u-form-item label="结束时间" label-width="150" right-icon="arrow-right">
 					<u-input placeholder="请选择" type="select" class="form-field-select" />
 				</u-form-item> -->
-				<u-form-item label="数量" label-width="150" >
-					<u-input placeholder="请输入" type="input" />
+				<u-form-item label="数量(扎)" label-width="150" >
+					<u-input placeholder="请输入" type="input" v-model="putForm.quantity"/>
 				</u-form-item>
 <!-- 				<u-form-item label="批发方式" label-width="150" right-icon="arrow-right">
 					<u-input placeholder="请选择" type="select" class="form-field-select" />
 				</u-form-item> -->
-				<u-form-item label="进货价" label-width="150" >
-					<u-input placeholder="请输入" type="input" />
-				</u-form-item>
-				<u-form-item label="档次:" label-width="130">
+				<!-- <u-form-item label="进货价" label-width="150" >
+					<u-input placeholder="请输入" type="input" v-model="putForm.buyingPrice"/>
+				</u-form-item> -->
+				<!-- <u-form-item label="档次:" label-width="130">
 					<u-input v-model="value" type="select" @click="gradeListOpen" />
 					<u-action-sheet :list="gradeList" v-model="gradeListShow"
 						@click="gradeSelectCallback1"></u-action-sheet>
-					<!-- <u-input placeholder="请选择一级分类" v-model="list.name" type="select" class="form-field-select" /> -->
-				</u-form-item>
+		
+				</u-form-item> -->
 
 			</u-form>
 			<u-row gutter="32" class="bottom-box" justify="center">
 				<u-col span="10">
 					<view>
-						<u-button type="primary" shape="circle" @click="navTo('/pages/sys/home/index')">确定</u-button>
+						<u-button type="primary" shape="circle" @click="submitPutForm">确定</u-button>
 					</view>
 				</u-col>
 			</u-row>
 		</view>
-	
+		<view v-if="current === 1">
+			<view class="search">
+				<u-search v-model="keyWords" @custom="search" @search="search"></u-search>
+			</view>
+				
+			<u-card v-for="item in logList" :key="item.id" class="task-list-item" :border="false" padding="20"
+				margin="20rpx">
+				<view slot="head" style="display: flex;align-items: center;justify-content: space-between;">
+					<view style="display: flex;align-items: center;font-size: 30rpx;">
+						<image class="user-images" src="/static/aidex/images/user06.png"></image>操作人：{{item.createBy}}
+					</view>
+					<view style="color: #999999;font-size: 22rpx;">{{item.createDatetime}}</view>
+				</view>
+				<view class="" slot="body">
+					<u-row gutter="16">
+						<u-col span="12">
+							<view class="apply-text"><span>三级分类：</span>{{item.type}}</view>
+						</u-col>
+						<u-col span="12">
+							<view class="apply-text"><span>数量：</span>{{item.num}}</view>
+						</u-col>
+
+					</u-row>
+				</view>
+<!-- 				<view class="apply-list-foot" slot="foot" style="text-align: right;color: #58ca93;">
+					<u-button type="primary" size="mini" shape="circle" :ripple="true">修改</u-button>
+					<u-button type="error" size="mini" shape="circle" :ripple="true">删除</u-button>
+				</view> -->
+			</u-card>
+			<u-loadmore :status="status" :icon-type="iconType" @loadmore="loadmore()" @onReachBottom="onReachBottom()" :load-text="loadText" />
+		</view>
+	<u-toast ref="uToast" />
 	
 	</view>
 </template>
@@ -57,6 +88,8 @@
 	export default {
 		data() {
 			return {
+				logList: [],
+				putForm: {},
 				value: '',
 				detailSelectValue: '',
 				gradeListShow: false,
@@ -64,7 +97,9 @@
 				show: false,
 				list: [{
 					name: '批发入库'
-				}],
+				},{
+					name: '入库记录'
+				},],
 				//档次
 				gradeList:[{
 					text: 'A'
@@ -96,31 +131,97 @@
 					name: 'ccc'
 				}],
 				keyWords: '',
-				form:{}
+				form:{},
+				logQueryParams: {
+					pageNum: 1,
+					        pageSize: 3,
+					        storageId: null,
+							type: null,
+					        inOut: null,
+					        num: null,
+					        createDatetime: null,
+					        outStatus: null,
+							createBy: null
+				},
+				total: 0
 			}
 		},
 		onLoad() {
 			this.getAppDetailSelect();
+			this.getStorageLogList();
 		},
 		created() {},
 		methods: {
+			//上拉触发，加载更多
+			onReachBottom() {
+				if (this.status != 'nomore') {
+					this.status = 'loading'
+					this.getStorageLogList();
+				}
+			},
+			//加载更多，点击触发
+			loadmore(e) {
+			
+				this.status = 'loading'
+				// this.queryParamsVarieties.pageNum = ++this.queryParamsVarieties.pageNum;
+				this.getStorageLogList();
+			
+			
+			},
+			getStorageLogList(){
+				
+				this.logQueryParams.inOut = 'in';
+				this.$u.api.put.putLogList(this.logQueryParams).then(res=>{
+					for (var i = 0; i < res.rows.length; i++) {
+						this.logList.push(res.rows[i])
+					}
+					if(this.logQueryParams.pageNum == 1){
+						this.total = res.total;
+					}
+					if (this.logQueryParams.pageNum * 3 > this.total) {
+						this.status = 'nomore'
+					} else {
+						
+						this.logQueryParams.pageNum = ++this.logQueryParams.pageNum;
+						this.status = 'loadmore'	
+					}	
+				})
+				
+
+			},
+			submitPutForm(){
+				this.$u.api.put.putForm(this.putForm).then(res=>{
+					this.putForm = {};
+					if(res.data == 1){
+						this.$refs.uToast.show({
+											title: '入库成功',
+											type: 'success',
+											url: '/pages/sys/workbench/put/index'
+										})
+					}else{
+						this.$refs.uToast.show({
+											title: '入库失败',
+											type: 'error',
+											url: '/pages/sys/workbench/put/index'
+										})
+					}
+				})
+			},
 			confirm(e) {
-							console.log(e);
-						},
+				this.detailSelectValue = e[1].label;
+				this.putForm.detailedId = e[1].value;
+				console.log(JSON.stringify(this.detailSelectValue));
+			},
 			getAppDetailSelect(){
 				this.$u.api.put.appDetailSelectList({
 				}).then(res => {
-					
 					// this.appDetailSelectList = res.data;
-					
 					for(let key in res.data){
-						console.log("---->"+JSON.stringify(res.data[key]))
 						let tmp = {
 							value: key,
 							label: key,
 							children:res.data[key]
 						}
-						console.log("---->"+JSON.stringify(tmp))
 						this.appDetailSelectList.push(tmp);
 					}
 				})

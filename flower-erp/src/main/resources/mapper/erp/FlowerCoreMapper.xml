@@ -30,5 +30,8 @@
         ORDER BY fv.varieties
     </select>
 
+    <select id="getDetailId" resultType="map" parameterType="string">
+        select id,detailed_id,quantity FROM flower_storage where detailed_id = #{detailId}
+    </select>
 
 </mapper>

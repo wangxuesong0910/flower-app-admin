@@ -1,14 +1,18 @@
 package com.flower.erp.controller;
 
+import com.flower.common.annotation.Log;
 import com.flower.common.core.controller.BaseController;
 import com.flower.common.core.domain.AjaxResult;
 import com.flower.common.core.domain.model.TencentBucket;
 import com.flower.common.core.page.TableDataInfo;
+import com.flower.common.enums.BusinessType;
 import com.flower.common.utils.SecurityUtils;
 import com.flower.common.utils.file.FileUploadUtils;
 import com.flower.erp.domain.FlowerAscription;
+import com.flower.erp.domain.FlowerStorage;
 import com.flower.erp.domain.bo.FlowerDetailedBo;
 import com.flower.erp.service.IFlowerCoreService;
+import com.flower.erp.service.IFlowerStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -79,6 +83,17 @@ public class FlowerCoreController extends BaseController {
     @GetMapping("/getUChartsStore")
     public AjaxResult getUChartsStore(){
         return AjaxResult.success(service.getUChartsStore());
+    }
+
+    /**
+     * 新增鲜花的仓储信息单
+     */
+
+    @Log(title = "鲜花的仓储信息单", businessType = BusinessType.INSERT)
+    @PostMapping("/putForm")
+    public AjaxResult addOrUpdateStorage(@RequestBody FlowerStorage flowerStorage)
+    {
+        return AjaxResult.success(service.addOrUpdateStorage(flowerStorage));
     }
 
 }

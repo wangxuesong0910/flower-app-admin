@@ -22,8 +22,8 @@ public class FlowerStorage extends BaseEntity
     private String id;
 
     /** 花的种类ID */
-    @Excel(name = "花的种类")
-    private String type;
+    @Excel(name = "三级分类Id")
+    private String detailedId;
 
     /** 花的档次：低中高... */
     @Excel(name = "花的档次：低中高...")
@@ -82,14 +82,14 @@ public class FlowerStorage extends BaseEntity
     {
         return id;
     }
-    public void setType(String type)
+    public void setDetailedId(String detailedId)
     {
-        this.type = type;
+        this.detailedId = detailedId;
     }
 
-    public String getType()
+    public String getDetailedId()
     {
-        return type;
+        return detailedId;
     }
     public void setGrade(String grade) 
     {
@@ -196,7 +196,7 @@ public class FlowerStorage extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("type", getType())
+            .append("DetailedId", getDetailedId())
             .append("grade", getGrade())
             .append("status", getStatus())
             .append("buyingPrice", getBuyingPrice())

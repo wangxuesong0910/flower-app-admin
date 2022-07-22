@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flower.erp.mapper.FlowerStorageLogMapper">
+    
+    <resultMap type="FlowerStorageLog" id="FlowerStorageLogResult">
+        <result property="id"    column="id"    />
+        <result property="storageId"    column="storage_id"    />
+        <result property="type"    column="type"    />
+        <result property="inOut"    column="in_out"    />
+        <result property="num"    column="num"    />
+        <result property="createDatetime"    column="create_datetime"    />
+        <result property="outStatus"    column="out_status"    />
+        <result property="createBy"    column="createBy"    />
+    </resultMap>
+
+    <sql id="selectFlowerStorageLogVo">
+        select id, storage_id, in_out, num, create_datetime, out_status,createBy,type from flower_storage_log
+    </sql>
+
+    <select id="selectFlowerStorageLogList" parameterType="FlowerStorageLog" resultMap="FlowerStorageLogResult">
+        <include refid="selectFlowerStorageLogVo"/>
+        <where>  
+            <if test="storageId != null  and storageId != ''"> and storage_id = #{storageId}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="inOut != null  and inOut != ''"> and in_out = #{inOut}</if>
+            <if test="num != null "> and num = #{num}</if>
+            <if test="createDatetime != null "> and create_datetime = #{createDatetime}</if>
+            <if test="outStatus != null  and outStatus != ''"> and out_status = #{outStatus}</if>
+            <if test="createBy != null  and createBy != ''"> and createBy = #{createBy}</if>
+        </where>
+        order by create_datetime desc
+    </select>
+    
+    <select id="selectFlowerStorageLogById" parameterType="Long" resultMap="FlowerStorageLogResult">
+        <include refid="selectFlowerStorageLogVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFlowerStorageLog" parameterType="FlowerStorageLog" useGeneratedKeys="true" keyProperty="id">
+        insert into flower_storage_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="storageId != null and storageId != ''">storage_id,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="inOut != null">in_out,</if>
+            <if test="num != null">num,</if>
+            <if test="createDatetime != null">create_datetime,</if>
+            <if test="outStatus != null">out_status,</if>
+            <if test="createBy != null">createBy,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="storageId != null and storageId != ''">#{storageId},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="inOut != null">#{inOut},</if>
+            <if test="num != null">#{num},</if>
+            <if test="createDatetime != null">#{createDatetime},</if>
+            <if test="outStatus != null">#{outStatus},</if>
+            <if test="createBy != null">#{createBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFlowerStorageLog" parameterType="FlowerStorageLog">
+        update flower_storage_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storageId != null and storageId != ''">storage_id = #{storageId},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="inOut != null">in_out = #{inOut},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="createDatetime != null">create_datetime = #{createDatetime},</if>
+            <if test="outStatus != null">out_status = #{outStatus},</if>
+            <if test="createBy != null">createBy = #{createBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFlowerStorageLogById" parameterType="Long">
+        delete from flower_storage_log where id = #{id}
+    </delete>
+
+    <delete id="deleteFlowerStorageLogByIds" parameterType="String">
+        delete from flower_storage_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

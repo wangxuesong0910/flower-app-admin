@@ -1,5 +1,6 @@
 package com.flower.erp.service;
 
+import com.flower.erp.domain.FlowerStorage;
 import com.flower.erp.domain.bo.FlowerDetailedBo;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface IFlowerCoreService {
     int getStoreQuantity();
 
     Map<Object, List<Map<String, Object>>> getUChartsStore();
+
+    int addOrUpdateStorage(FlowerStorage flowerStorage);
 }
